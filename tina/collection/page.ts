@@ -4,6 +4,7 @@ import { contentBlockSchema } from "@/components/blocks/content";
 import { testimonialBlockSchema } from "@/components/blocks/testimonial";
 import { featureBlockSchema } from "@/components/blocks/features";
 import { videoBlockSchema } from "@/components/blocks/video";
+import { caseStudiesBlockSchema } from "@/components/blocks/case-studies";
 
 const Page: Collection = {
   label: "Pages",
@@ -43,6 +44,7 @@ const Page: Collection = {
         contentBlockSchema,
         testimonialBlockSchema,
         videoBlockSchema,
+        caseStudiesBlockSchema,
       ],
     },
   ],

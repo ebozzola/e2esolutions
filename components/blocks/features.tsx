@@ -20,15 +20,23 @@ export const Feature = ({
   return (
     <div
       data-tina-field={tinaField(data)}
-      className="flex-1 flex flex-col gap-6 text-center items-center lg:items-start lg:text-left max-w-xl mx-auto"
-      style={{ flexBasis: "16rem" }}
+      className="flex-1 flex flex-col gap-6 min-w-[280px] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.33%-1rem)]"
     >
       {data.icon && (
-        <Icon
-          tinaField={tinaField(data, "icon")}
-          parentColor={featuresColor}
-          data={{ size: "large", ...data.icon }}
-        />
+        <div
+          data-tina-field={tinaField(data, "icon")}
+          className={`relative inline-flex items-center justify-center w-12 h-12`}
+        >
+          <Icon
+            parentColor={featuresColor}
+            data={{
+              name: data.icon.name,
+              color: data.icon.color,
+              style: data.icon.style,
+            }}
+            className={`w-full h-full`}
+          />
+        </div>
       )}
       {data.title && (
         <h3
@@ -39,11 +47,11 @@ export const Feature = ({
         </h3>
       )}
       {data.text && (
-        <div className="prose text-base opacity-80 leading-relaxed">
-          <TinaMarkdown
-            data-tina-field={tinaField(data, "text")}
-            content={data.text}
-          />
+        <div
+          data-tina-field={tinaField(data, "text")}
+          className="prose prose-md dark:prose-dark"
+        >
+          <TinaMarkdown content={data.text} />
         </div>
       )}
     </div>
@@ -54,7 +62,7 @@ export const Features = ({ data }: { data: PageBlocksFeatures }) => {
   return (
     <Section color={data.color}>
       <Container
-        className={`flex flex-wrap gap-x-10 gap-y-8 text-left`}
+        className={`flex flex-wrap gap-x-10 gap-y-8 text-left py-12 md:py-20`}
         size="large"
       >
         {data.items &&

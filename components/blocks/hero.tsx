@@ -26,13 +26,13 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
     <Section color={data.color}>
       <Container
         size="large"
-        className="grid grid-cols-1 md:grid-cols-5 gap-14 items-start justify-center"
+        className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-14 items-center justify-center py-12 md:py-20"
       >
         <div className="row-start-2 md:row-start-1 md:col-span-5 text-center md:text-left">
           {data.tagline && (
             <h2
               data-tina-field={tinaField(data, "tagline")}
-              className="relative inline-block px-3 py-1 mb-8 text-md font-bold tracking-wide title-font z-20"
+              className="relative inline-block px-3 py-1 mb-6 md:mb-8 text-sm md:text-md font-bold tracking-wide title-font z-20"
             >
               {data.tagline}
               <span className="absolute w-full h-full left-0 top-0 rounded-full -z-1 bg-current opacity-7"></span>
@@ -41,7 +41,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.headline && (
             <h3
               data-tina-field={tinaField(data, "headline")}
-              className={`w-full relative mb-10 text-5xl font-extrabold tracking-normal leading-tight title-font`}
+              className={`w-full relative mb-6 md:mb-10 text-3xl md:text-5xl font-extrabold tracking-normal leading-tight title-font`}
             >
               <span
                 className={`bg-clip-text text-transparent bg-gradient-to-r  ${
@@ -65,12 +65,12 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                       : `dark:prose-dark`
                   }`}
                 >
-                  <TinaMarkdown 
+                  <TinaMarkdown
                     content={data.text}
                     components={{
                       mermaid({ value }) {
                         return <MermaidElement value={value} />;
-                      }
+                      },
                     }}
                   />
                 </div>
@@ -99,12 +99,12 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 data.color === "primary" ? `prose-primary` : `dark:prose-dark`
               }`}
             >
-              <TinaMarkdown 
+              <TinaMarkdown
                 content={data.text2}
                 components={{
                   mermaid({ value }) {
                     return <MermaidElement value={value} />;
-                  }
+                  },
                 }}
               />
             </div>

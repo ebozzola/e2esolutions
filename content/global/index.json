@@ -1,11 +1,11 @@
 {
   "header": {
     "icon": {
-      "name": "Tina",
-      "color": "orange",
+      "name": "BiCube",
+      "color": "blue",
       "style": "float"
     },
-    "name": "Tina Starter",
+    "name": "E2E Solutions",
     "color": "default",
     "nav": [
       {
@@ -13,29 +13,41 @@
         "label": "Home"
       },
       {
+        "href": "services",
+        "label": "Services"
+      },
+      {
+        "href": "areas-of-excellence",
+        "label": "Areas of Excellence"
+      },
+      {
+        "href": "case-studies",
+        "label": "Case Studies"
+      },
+      {
         "href": "about",
         "label": "About"
       },
       {
-        "href": "posts",
-        "label": "Blog"
+        "href": "contact",
+        "label": "Contact"
       }
     ]
   },
   "footer": {
     "color": "default",
     "social": {
-      "facebook": "",
-      "twitter": "https://x.com/TinaCMS",
+      "facebook": "https://facebook.com/e2esolutions",
+      "twitter": "https://twitter.com/e2esolutions",
       "instagram": "",
-      "linkedIn": "https://www.linkedin.com/company/tinacms",
-      "github": "https://github.com/tinacms/tinacms",
-      "youtube": "https://www.youtube.com/@TinaCMS"
+      "linkedIn": "https://www.linkedin.com/company/e2esolutions",
+      "github": "",
+      "youtube": ""
     }
   },
   "theme": {
     "color": "blue",
     "font": "sans",
-    "darkMode": "light"
+    "darkMode": "system"
   }
 }
