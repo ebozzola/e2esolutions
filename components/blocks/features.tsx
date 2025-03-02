@@ -43,15 +43,19 @@ export const Feature = ({
       data-tina-field={tinaField(data)}
       className={`feature-card flex-1 flex flex-col gap-6 min-w-[280px] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.33%-1rem)] 
         ${isVisible ? "animate-slideInFromBottom" : "opacity-0"} 
-        ${featuresColor === "primary" ? "glass-dark" : "glass"} 
-        hover-lift hover-glow`}
+        ${
+          featuresColor === "primary"
+            ? "glass-dark-industrial"
+            : "glass-industrial"
+        } 
+        hover-lift`}
     >
       {data.icon && (
         <div
           data-tina-field={tinaField(data, "icon")}
-          className={`relative inline-flex items-center justify-center w-16 h-16 animate-float`}
+          className={`relative inline-flex items-center justify-center w-16 h-16`}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-full"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-700/20 to-gray-900/20 rounded-sm"></div>
           <Icon
             parentColor={featuresColor}
             data={{
@@ -87,21 +91,29 @@ export const Features = ({ data }: { data: PageBlocksFeatures }) => {
   return (
     <Section color={data.color} className="relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute inset-0 -z-1">
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
-        {data.color === "primary" && (
-          <div className="absolute inset-0 bg-gradient-animated opacity-30"></div>
+      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+        <div className="absolute inset-0 bg-pattern-industrial opacity-5"></div>
+        {data.color === "primary" ? (
+          <div className="absolute inset-0 bg-gradient-industrial-dark opacity-70"></div>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-industrial-diagonal opacity-20"></div>
         )}
       </div>
 
       {/* Decorative elements */}
-      <div className="hidden md:block">
-        <div className="absolute top-10 right-10 w-64 h-64 rounded-full bg-blue-500/10 blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-64 h-64 rounded-full bg-blue-700/5 blur-3xl"></div>
+      <div className="hidden md:block" style={{ zIndex: 1 }}>
+        <div className="absolute top-10 right-10 w-64 h-1 bg-gray-500/20"></div>
+        <div className="absolute top-10 right-10 w-1 h-64 bg-gray-500/20"></div>
+        <div className="absolute bottom-10 left-10 w-64 h-1 bg-gray-500/20"></div>
+        <div className="absolute bottom-10 left-10 w-1 h-64 bg-gray-500/20"></div>
+
+        {/* Additional geometric elements */}
+        <div className="absolute top-1/3 left-1/4 w-16 h-16 border border-gray-500/15"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-16 h-16 border border-gray-500/15 rotate-45"></div>
       </div>
 
       <Container
-        className={`flex flex-wrap gap-x-10 gap-y-8 text-left py-12 md:py-20`}
+        className={`flex flex-wrap gap-x-10 gap-y-8 text-left py-12 md:py-20 relative z-10`}
         size="large"
       >
         {data.items &&

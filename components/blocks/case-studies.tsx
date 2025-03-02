@@ -31,6 +31,7 @@ export const caseStudiesBlockSchema: Template = {
       type: "string",
       name: "headline",
       label: "Headline",
+      required: true,
     },
     {
       type: "string",

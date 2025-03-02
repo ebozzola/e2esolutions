@@ -18,7 +18,7 @@
   }
 
   .hero-background {
-    @apply absolute inset-0 -z-1 opacity-20 dark:opacity-10;
+    @apply absolute inset-0 opacity-50 dark:opacity-40;
   }
 
   .hero-content {
@@ -26,6 +26,35 @@
   }
 
   .feature-card {
-    @apply rounded-xl p-6 transition-all duration-300 hover:shadow-lg;
+    @apply rounded-sm p-6 transition-all duration-300 hover:shadow-lg border-l-2 border-gray-300;
+  }
+
+  .glass-industrial {
+    @apply bg-white/80 backdrop-blur-sm border-l-2 border-gray-200 shadow-md;
+  }
+
+  .glass-dark-industrial {
+    @apply bg-gray-800/60 backdrop-blur-sm border-l-2 border-gray-600 shadow-md;
+  }
+
+  /* Enhanced industrial card styles */
+  .industrial-card {
+    @apply relative overflow-hidden rounded-sm border-l-2 border-gray-200 shadow-md;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0.85)
+    );
+    backdrop-filter: blur(10px);
+  }
+
+  .industrial-card-dark {
+    @apply relative overflow-hidden rounded-sm border-l-2 border-gray-600 shadow-md;
+    background: linear-gradient(
+      135deg,
+      rgba(55, 71, 79, 0.8),
+      rgba(55, 71, 79, 0.6)
+    );
+    backdrop-filter: blur(10px);
   }
 }

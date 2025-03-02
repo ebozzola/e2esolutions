@@ -26,22 +26,30 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
       className="relative overflow-hidden py-16 md:py-24"
     >
       {/* Background elements */}
-      <div className="absolute inset-0 -z-1">
-        {data.color === "primary" && (
-          <div className="absolute inset-0 bg-gradient-animated opacity-30"></div>
+      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+        {data.color === "primary" ? (
+          <div className="absolute inset-0 bg-gradient-industrial-steel opacity-70"></div>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-industrial-metal opacity-20"></div>
         )}
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-pattern-industrial opacity-5"></div>
       </div>
 
       {/* Decorative elements */}
-      <div className="hidden md:block">
-        <div className="absolute top-0 left-0 w-32 h-32 rounded-full bg-blue-500/10 blur-2xl"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-32 rounded-full bg-blue-700/10 blur-2xl"></div>
-        <div className="absolute top-1/4 right-1/4 w-4 h-4 rounded-full bg-blue-400 opacity-20 animate-float"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-6 h-6 rounded-full bg-blue-300 opacity-20 animate-float animate-delay-300"></div>
+      <div className="hidden md:block" style={{ zIndex: 1 }}>
+        <div className="absolute top-0 left-0 w-32 h-1 bg-gray-500/15"></div>
+        <div className="absolute top-0 left-0 w-1 h-32 bg-gray-500/15"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-1 bg-gray-500/15"></div>
+        <div className="absolute bottom-0 right-0 w-1 h-32 bg-gray-500/15"></div>
+        <div className="absolute top-1/4 right-1/4 w-8 h-8 border border-gray-500/20 rotate-45"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-12 h-12 border border-gray-500/20 rotate-45"></div>
+
+        {/* Additional geometric elements */}
+        <div className="absolute top-1/2 right-1/3 w-20 h-1 bg-gray-500/15"></div>
+        <div className="absolute bottom-1/2 left-1/3 w-20 h-1 bg-gray-500/15"></div>
       </div>
 
-      <Container size="large">
+      <Container size="large" className="relative z-10">
         <blockquote
           ref={ref}
           className={`${
@@ -56,9 +64,10 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
             }`}
           >
             <span
-              className={`block opacity-15 text-8xl absolute inset-y-1/2 transform translate-y-2 -left-4 leading-4 -z-1 ${
+              className={`block opacity-15 text-8xl absolute inset-y-1/2 transform translate-y-2 -left-4 leading-4 ${
                 isVisible ? "animate-slideInFromLeft" : "opacity-0"
               }`}
+              style={{ zIndex: -1 }}
             >
               &ldquo;
             </span>
@@ -68,12 +77,13 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
                 isVisible ? "animate-pulse" : ""
               }`}
             >
-              {data.quote}
+              {typeof data.quote === "string" ? data.quote : ""}
             </p>
             <span
-              className={`block opacity-15 text-8xl absolute inset-y-1/2 transform translate-y-3 -right-4 leading-4 -z-1 ${
+              className={`block opacity-15 text-8xl absolute inset-y-1/2 transform translate-y-3 -right-4 leading-4 ${
                 isVisible ? "animate-slideInFromRight" : "opacity-0"
               }`}
+              style={{ zIndex: -1 }}
             >
               &rdquo;
             </span>
@@ -88,8 +98,8 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
             <span
               className={`block mx-auto h-0.5 w-1/6 ${
                 data.color === "primary"
-                  ? `bg-blue-600`
-                  : `bg-gray-200 dark:bg-gray-700`
+                  ? `bg-gray-600`
+                  : `bg-gray-300 dark:bg-gray-700`
               }`}
             ></span>
           </div>
