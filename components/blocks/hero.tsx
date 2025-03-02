@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import type { Template } from "tinacms";
 import { PageBlocksHero } from "../../tina/__generated__/types";
@@ -9,8 +10,22 @@ import { Section } from "../layout/section";
 import { Container } from "../layout/container";
 import { Actions } from "./actions";
 import MermaidElement from "../mermaid-renderer";
+import { useInView } from "react-intersection-observer";
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (inView) {
+      setIsVisible(true);
+    }
+  }, [inView]);
+
   const headlineColorClasses = {
     blue: "from-gray-600 to-gray-800",
     teal: "from-teal-600 to-teal-800",
@@ -52,11 +67,18 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
         size="large"
         className="hero-content grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-14 items-center justify-center py-12 md:py-20 relative z-10"
       >
-        <div className="row-start-2 md:row-start-1 md:col-span-5 text-center md:text-left">
+        <div
+          ref={ref}
+          className="row-start-2 md:row-start-1 md:col-span-5 text-center md:text-left"
+        >
           {data.tagline && (
             <h2
               data-tina-field={tinaField(data, "tagline")}
-              className="animate-slideInFromBottom animate-delay-100 relative inline-block px-3 py-1 mb-6 md:mb-8 text-sm md:text-md font-bold tracking-wide title-font z-20"
+              className={`${
+                isVisible
+                  ? "animate-slideInFromBottom animate-delay-100"
+                  : "opacity-0"
+              } relative inline-block px-3 py-1 mb-6 md:mb-8 text-sm md:text-md font-bold tracking-wide title-font z-20`}
             >
               {data.tagline}
               <span
@@ -68,7 +90,11 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.headline && (
             <h3
               data-tina-field={tinaField(data, "headline")}
-              className="animate-slideInFromBottom animate-delay-200 w-full relative mb-6 md:mb-10 text-3xl md:text-5xl font-extrabold tracking-normal leading-tight title-font"
+              className={`${
+                isVisible
+                  ? "animate-slideInFromBottom animate-delay-200"
+                  : "opacity-0"
+              } w-full relative mb-6 md:mb-10 text-3xl md:text-5xl font-extrabold tracking-normal leading-tight title-font`}
             >
               <span
                 className={`bg-clip-text text-transparent bg-gradient-to-r  ${
@@ -86,7 +112,11 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
               {data.text && (
                 <div
                   data-tina-field={tinaField(data, "text")}
-                  className={`animate-slideInFromBottom animate-delay-300 prose prose-lg mx-auto md:mx-0 mb-10 ${
+                  className={`${
+                    isVisible
+                      ? "animate-slideInFromBottom animate-delay-300"
+                      : "opacity-0"
+                  } prose prose-lg mx-auto md:mx-0 mb-10 ${
                     data.color === "primary"
                       ? `prose-primary`
                       : `dark:prose-dark`
@@ -106,7 +136,11 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
             {data.image && (
               <div
                 data-tina-field={tinaField(data.image, "src")}
-                className="animate-slideInFromRight animate-delay-400 relative flex-shrink-0 md:w-2/5 flex justify-center"
+                className={`${
+                  isVisible
+                    ? "animate-slideInFromRight animate-delay-400"
+                    : "opacity-0"
+                } relative flex-shrink-0 md:w-2/5 flex justify-center`}
               >
                 <div className="relative overflow-hidden rounded-lg shadow-xl hover-lift">
                   <div className="absolute -inset-1 bg-gradient-to-r from-gray-700 to-gray-500 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
@@ -127,7 +161,11 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.text2 && (
             <div
               data-tina-field={tinaField(data, "text2")}
-              className={`animate-slideInFromBottom animate-delay-400 prose prose-lg mx-auto md:mx-0 mb-10 ${
+              className={`${
+                isVisible
+                  ? "animate-slideInFromBottom animate-delay-400"
+                  : "opacity-0"
+              } prose prose-lg mx-auto md:mx-0 mb-10 ${
                 data.color === "primary" ? `prose-primary` : `dark:prose-dark`
               }`}
             >
