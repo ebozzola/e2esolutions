@@ -5,6 +5,7 @@ import { testimonialBlockSchema } from "@/components/blocks/testimonial";
 import { featureBlockSchema } from "@/components/blocks/features";
 import { videoBlockSchema } from "@/components/blocks/video";
 import { caseStudiesBlockSchema } from "@/components/blocks/case-studies";
+import { contactFormBlockSchema } from "@/components/blocks/contact-form";
 
 const Page: Collection = {
   label: "Pages",
@@ -45,6 +46,7 @@ const Page: Collection = {
         testimonialBlockSchema,
         videoBlockSchema,
         caseStudiesBlockSchema,
+        contactFormBlockSchema,
       ],
     },
   ],
