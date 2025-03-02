@@ -32,7 +32,7 @@ export const contactFormBlockSchema: Template = {
       type: "string" as const,
       label: "Form ID",
       name: "formId",
-      description: "The Formspree form ID (e.g., xqkjazdb)",
+      description: "xldgqllq",
     },
     {
       label: "Color",

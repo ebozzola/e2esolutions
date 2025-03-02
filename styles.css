@@ -1,3 +1,31 @@
+@import "./styles/animations.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    @apply bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
+  }
+}
+
+/* Custom Component Styles */
+@layer components {
+  .hero-section {
+    @apply relative overflow-hidden;
+  }
+
+  .hero-background {
+    @apply absolute inset-0 -z-1 opacity-20 dark:opacity-10;
+  }
+
+  .hero-content {
+    @apply relative z-10;
+  }
+
+  .feature-card {
+    @apply rounded-xl p-6 transition-all duration-300 hover:shadow-lg;
+  }
+}
