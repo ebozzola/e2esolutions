@@ -4,13 +4,18 @@ import { cn } from "../../lib/utils";
 import { Container } from "../layout/container";
 import Link from "next/link";
 import { Icon } from "../icon";
-import { FaFacebookF, FaGithub, FaLinkedin, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import {
+  FaFacebookF,
+  FaGithub,
+  FaLinkedin,
+  FaXTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
 import { useLayout } from "../layout/layout-context";
-import { RawRenderer } from "../raw-renderer";
 
 export default function Footer() {
-  const { theme, globalSettings, pageData } = useLayout();
+  const { theme, globalSettings } = useLayout();
   const footer = globalSettings?.footer;
 
   const socialIconClasses = "h-7 w-auto";
@@ -159,7 +164,6 @@ export default function Footer() {
               </a>
             )}
           </div>
-          <RawRenderer parentColor={footer.color} rawData={pageData} />
         </div>
         <div
           className={cn(
