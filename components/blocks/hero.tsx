@@ -132,6 +132,15 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                   />
                 </div>
               )}
+              {data.actions && (
+                <div className="animate-slideInFromBottom animate-delay-500 mt-10">
+                  <Actions
+                    className="justify-center md:justify-start py-2"
+                    parentColor={data.color}
+                    actions={data.actions}
+                  />
+                </div>
+              )}
             </div>
             {data.image && (
               <div
