@@ -20,10 +20,6 @@ const Page: Collection = {
       return undefined;
     },
   },
-  match: {
-    include: "**/*.mdx",
-    exclude: "**/_next/**/*",
-  },
   fields: [
     {
       type: "string",
