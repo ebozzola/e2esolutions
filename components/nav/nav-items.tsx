@@ -1,6 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import { createPortal } from "react-dom";
 import NavActive from "./nav-active";
 import { tinaField } from "tinacms/dist/react";
 import Link from "next/link";
@@ -58,7 +59,7 @@ export default function NavItems({ navs }: { navs: any }) {
   return (
     <>
       {/* Mobile hamburger button */}
-      <div className="md:hidden relative">
+      <div className="md:hidden">
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline-none"
@@ -70,34 +71,46 @@ export default function NavItems({ navs }: { navs: any }) {
             <BiMenu className="w-6 h-6" />
           )}
         </button>
-
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="fixed top-[calc(var(--header-height,4rem))] right-4 z-[100] bg-white dark:bg-gray-900 shadow-lg py-2 px-4 w-64 mt-2 rounded-lg border border-gray-200 dark:border-gray-700">
-            <ul className="flex flex-col space-y-2">
-              {navs.map((item) => {
-                const isActive = currentPath === `/${item.href}`;
-                return (
-                  <li key={item.href}>
-                    <Link
-                      data-tina-field={tinaField(item, "label")}
-                      href={`/${item.href}`}
-                      className={`block py-2 px-3 rounded-md text-base ${
-                        isActive
-                          ? mobileActiveItemClasses[theme.color]
-                          : "hover:bg-gray-100 dark:hover:bg-gray-800"
-                      }`}
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )}
       </div>
+
+      {/* Mobile menu in portal */}
+      {mobileMenuOpen &&
+        typeof window !== "undefined" &&
+        createPortal(
+          <div className="fixed inset-0" style={{ zIndex: 9999 }}>
+            <div
+              className="fixed inset-0 bg-black/10 backdrop-blur-[2px]"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <div
+              className="fixed top-[calc(var(--header-height,4rem))] right-4 w-64 p-4 rounded-lg bg-white dark:bg-gray-900 shadow-lg border border-gray-200 dark:border-gray-700"
+              style={{ zIndex: 10000 }}
+            >
+              <ul className="flex flex-col space-y-2">
+                {navs.map((item) => {
+                  const isActive = currentPath === `/${item.href}`;
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        data-tina-field={tinaField(item, "label")}
+                        href={`/${item.href}`}
+                        className={`block py-2 px-3 rounded-md text-base ${
+                          isActive
+                            ? mobileActiveItemClasses[theme.color]
+                            : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>,
+          document.body
+        )}
 
       {/* Desktop menu */}
       <ul className="hidden md:flex gap-6 sm:gap-8 lg:gap-10 tracking-[.002em] -mx-4">
