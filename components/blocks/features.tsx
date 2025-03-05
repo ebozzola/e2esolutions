@@ -11,6 +11,7 @@ import { iconSchema } from "../../tina/fields/icon";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export const Feature = ({
   featuresColor,
@@ -41,14 +42,17 @@ export const Feature = ({
     <div
       ref={ref}
       data-tina-field={tinaField(data)}
-      className={`feature-card flex-1 flex flex-col gap-6 min-w-[280px] max-w-full sm:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.33%-1rem)] 
+      className={`feature-card flex flex-col gap-8
+        w-full 
+        md:w-[calc(50%-1rem)] 
+        xl:w-[calc(33.333%-1.5rem)]
         ${isVisible ? "animate-slideInFromBottom" : "opacity-0"} 
         ${
           featuresColor === "primary"
             ? "glass-dark-industrial"
             : "glass-industrial"
         } 
-        hover-lift`}
+        hover-lift relative p-8 mb-8`}
     >
       {data.icon && (
         <div
@@ -67,10 +71,24 @@ export const Feature = ({
           />
         </div>
       )}
+      {data.image?.src && (
+        <div
+          data-tina-field={tinaField(data.image, "src")}
+          className="absolute top-8 right-8"
+        >
+          <Image
+            src={data.image.src}
+            alt={data.image.alt || "Profile picture"}
+            width={100}
+            height={100}
+            className="rounded-full shadow-lg border-2 border-gray-200"
+          />
+        </div>
+      )}
       {data.title && (
         <h3
           data-tina-field={tinaField(data, "title")}
-          className="text-2xl font-semibold title-font"
+          className="text-2xl font-semibold title-font pr-32 mb-4"
         >
           {data.title}
         </h3>
@@ -78,7 +96,7 @@ export const Feature = ({
       {data.text && (
         <div
           data-tina-field={tinaField(data, "text")}
-          className="prose prose-md dark:prose-dark"
+          className="prose prose-lg dark:prose-dark"
         >
           <TinaMarkdown content={data.text} />
         </div>
@@ -113,8 +131,8 @@ export const Features = ({ data }: { data: PageBlocksFeatures }) => {
       </div>
 
       <Container
-        className={`flex flex-wrap gap-x-10 gap-y-8 text-left py-12 md:py-20 relative z-10`}
-        size="large"
+        className={`flex flex-wrap gap-8 text-left py-16 md:py-24 relative z-10 mx-auto w-full max-w-[90%] xl:max-w-[85%]`}
+        size="custom"
       >
         {data.items &&
           data.items.map(function (block, i) {
@@ -139,6 +157,10 @@ const defaultFeature = {
     color: "",
     style: "float",
     name: "",
+  },
+  image: {
+    src: "",
+    alt: "",
   },
 };
 
@@ -169,6 +191,23 @@ export const featureBlockSchema = {
       },
       fields: [
         iconSchema,
+        {
+          type: "object",
+          label: "Image",
+          name: "image",
+          fields: [
+            {
+              name: "src",
+              label: "Image Source",
+              type: "image",
+            },
+            {
+              name: "alt",
+              label: "Alt Text",
+              type: "string",
+            },
+          ],
+        },
         {
           type: "string",
           label: "Title",
