@@ -9,36 +9,29 @@ import { useLayout } from "../layout/layout-context";
 import { IconOptions } from "../icon";
 
 const activeItemClasses = {
-  blue: "border-b-3 border-blue-200 text-blue-700 dark:text-blue-300 font-medium dark:border-blue-700",
-  teal: "border-b-3 border-teal-200 text-teal-700 dark:text-teal-300 font-medium dark:border-teal-700",
-  green:
-    "border-b-3 border-green-200 text-green-700 dark:text-green-300 font-medium dark:border-green-700",
-  red: "border-b-3 border-red-300 text-red-700 dark:text-green-300 font-medium dark:border-red-700",
-  pink: "border-b-3 border-pink-200 text-pink-700 dark:text-pink-300 font-medium dark:border-pink-700",
-  purple:
-    "border-b-3 border-purple-200 text-purple-700 dark:text-purple-300 font-medium dark:border-purple-700",
-  orange:
-    "border-b-3 border-orange-200 text-orange-700 dark:text-orange-300 font-medium dark:border-orange-700",
-  yellow:
-    "border-b-3 border-yellow-300 text-yellow-700 dark:text-yellow-300 font-medium dark:border-yellow-600",
+  blue: "text-primary font-medium border-b-2 border-primary",
+  teal: "text-teal-500 font-medium border-b-2 border-teal-500",
+  green: "text-green-500 font-medium border-b-2 border-green-500",
+  red: "text-red-500 font-medium border-b-2 border-red-500",
+  pink: "text-pink-500 font-medium border-b-2 border-pink-500",
+  purple: "text-purple-500 font-medium border-b-2 border-purple-500",
+  orange: "text-orange-500 font-medium border-b-2 border-orange-500",
+  yellow: "text-yellow-500 font-medium border-b-2 border-yellow-500",
 };
 
 const mobileActiveItemClasses = {
-  blue: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-  teal: "bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
-  green: "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-  red: "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300",
-  pink: "bg-pink-50 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
-  purple:
-    "bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-  orange:
-    "bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-  yellow:
-    "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
+  blue: "bg-primary/10 text-primary",
+  teal: "bg-teal-500/10 text-teal-500",
+  green: "bg-green-500/10 text-green-500",
+  red: "bg-red-500/10 text-red-500",
+  pink: "bg-pink-500/10 text-pink-500",
+  purple: "bg-purple-500/10 text-purple-500",
+  orange: "bg-orange-500/10 text-orange-500",
+  yellow: "bg-yellow-500/10 text-yellow-500",
 };
 
 const activeBackgroundClasses = {
-  blue: "text-blue-500",
+  blue: "text-primary",
   teal: "text-teal-500",
   green: "text-green-500",
   red: "text-red-500",
@@ -79,11 +72,11 @@ export default function NavItems({ navs }: { navs: any }) {
         createPortal(
           <div className="fixed inset-0" style={{ zIndex: 9999 }}>
             <div
-              className="fixed inset-0 bg-black/10 backdrop-blur-[2px]"
+              className="fixed inset-0 bg-black/20 backdrop-blur-md"
               onClick={() => setMobileMenuOpen(false)}
             />
             <div
-              className="fixed top-[calc(var(--header-height,4rem))] right-4 w-64 p-4 rounded-lg bg-white dark:bg-gray-900 shadow-lg border border-gray-200 dark:border-gray-700"
+              className="fixed top-[calc(var(--header-height,4rem))] right-4 w-64 p-4 rounded-lg bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg border border-white/20 dark:border-gray-700/30"
               style={{ zIndex: 10000 }}
             >
               <ul className="flex flex-col space-y-2">
@@ -94,10 +87,10 @@ export default function NavItems({ navs }: { navs: any }) {
                       <Link
                         data-tina-field={tinaField(item, "label")}
                         href={`/${item.href}`}
-                        className={`block py-2 px-3 rounded-md text-base ${
+                        className={`block py-2 px-3 rounded-md text-base transition-all duration-200 ${
                           isActive
                             ? mobileActiveItemClasses[theme.color]
-                            : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                            : "hover:bg-gray-100/50 dark:hover:bg-gray-800/50"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -115,22 +108,21 @@ export default function NavItems({ navs }: { navs: any }) {
       {/* Desktop menu */}
       <ul className="hidden md:flex gap-6 sm:gap-8 lg:gap-10 tracking-[.002em] -mx-4">
         {navs.map((item) => {
+          const isActive = currentPath === `/${item.href}`;
           return (
             <li
               key={item.href}
-              className={
-                currentPath === `/${item.href}`
-                  ? activeItemClasses[theme.color]
-                  : ""
-              }
+              className={isActive ? activeItemClasses[theme.color] : ""}
             >
               <Link
                 data-tina-field={tinaField(item, "label")}
                 href={`/${item.href}`}
-                className={`relative select-none text-base inline-block tracking-wide transition duration-150 ease-out hover:opacity-100 py-8 px-4`}
+                className={`relative select-none text-sm font-medium inline-block tracking-wide transition-all duration-200 ease-out hover:text-primary dark:hover:text-primary py-6 px-4 ${
+                  !isActive ? "text-gray-600 dark:text-gray-300" : ""
+                }`}
               >
                 {item.label}
-                {currentPath === `/${item.href}` && (
+                {isActive && (
                   <NavActive
                     backgroundColor={activeBackgroundClasses[theme.color]}
                   />

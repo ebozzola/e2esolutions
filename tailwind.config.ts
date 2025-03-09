@@ -18,6 +18,7 @@ module.exports = {
       purple: colors.purple,
       pink: colors.pink,
       yellow: colors.yellow,
+      primary: colors.blue[600],
       gray: {
         50: "#F6F6F9",
         100: "#EDECF3",

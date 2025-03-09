@@ -77,6 +77,22 @@
   }
 }
 
+/* Blob animation for modern design */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
 /* Animation Classes */
 .animate-fadeIn {
   animation: fadeIn 1s ease-out forwards;
@@ -100,6 +116,22 @@
 
 .animate-float {
   animation: float 3s infinite ease-in-out;
+}
+
+.animate-blob {
+  animation: blob 7s infinite ease-in-out;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
 }
 
 .animate-delay-100 {
@@ -127,6 +159,17 @@
   background: linear-gradient(-45deg, #0084ff, #0d5dbd, #144696, #1d2c6c);
   background-size: 400% 400%;
   animation: gradientBg 15s ease infinite;
+}
+
+/* Modern Background Styles */
+.bg-grid-pattern {
+  background-size: 20px 20px;
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
 }
 
 /* Industrial Background Styles */
@@ -194,6 +237,22 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-industrial {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-dark-industrial {
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 /* Hover Effects */

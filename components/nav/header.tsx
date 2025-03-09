@@ -10,17 +10,16 @@ import NavItems from "./nav-items";
 import { useLayout } from "../layout/layout-context";
 
 const headerColor = {
-  default:
-    "text-black dark:text-white from-gray-50 to-white dark:from-gray-800 dark:to-gray-900",
+  default: "text-gray-800 dark:text-white backdrop-blur-md",
   primary: {
-    blue: "text-white from-blue-300 to-blue-500",
-    teal: "text-white from-teal-400 to-teal-500",
-    green: "text-white from-green-400 to-green-500",
-    red: "text-white from-red-400 to-red-500",
-    pink: "text-white from-pink-400 to-pink-500",
-    purple: "text-white from-purple-400 to-purple-500",
-    orange: "text-white from-orange-400 to-orange-500",
-    yellow: "text-white from-yellow-400 to-yellow-500",
+    blue: "text-white backdrop-blur-md",
+    teal: "text-white backdrop-blur-md",
+    green: "text-white backdrop-blur-md",
+    red: "text-white backdrop-blur-md",
+    pink: "text-white backdrop-blur-md",
+    purple: "text-white backdrop-blur-md",
+    orange: "text-white backdrop-blur-md",
+    yellow: "text-white backdrop-blur-md",
   },
 };
 
@@ -35,8 +34,18 @@ export default function Header() {
 
   return (
     <div
-      className={`relative overflow-hidden bg-gradient-to-b ${headerColorCss}`}
+      className={`sticky top-0 z-50 w-full border-b border-white/10 ${headerColorCss}`}
     >
+      {/* Background that matches hero section */}
+      <div className="absolute inset-0 bg-white/5 dark:bg-gray-900/5 z-0">
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-purple-500/5 to-blue-500/5"></div>
+
+        {/* Subtle blob in background */}
+        <div className="absolute -top-20 -right-20 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-5"></div>
+        <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-5"></div>
+      </div>
+
       <Container size="custom" className="py-0 relative z-10 max-w-8xl">
         <div className="flex items-center justify-between gap-6 relative">
           <h4 className="select-none text-lg font-bold tracking-tight my-4 transition duration-150 ease-out transform">
@@ -64,9 +73,9 @@ export default function Header() {
           className={cn(
             `absolute h-1 bg-gradient-to-r from-transparent`,
             theme.darkMode === "primary"
-              ? `via-white`
-              : `via-black dark:via-white`,
-            "to-transparent bottom-0 left-4 right-4 -z-1 opacity-5"
+              ? `via-white/20`
+              : `via-primary/20 dark:via-white/20`,
+            "to-transparent bottom-0 left-4 right-4 -z-1 opacity-30"
           )}
         />
       </Container>

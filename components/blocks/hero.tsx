@@ -27,7 +27,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
   }, [inView]);
 
   const headlineColorClasses = {
-    blue: "from-gray-600 to-gray-800",
+    blue: "from-blue-600 to-blue-800",
     teal: "from-teal-600 to-teal-800",
     green: "from-green-600 to-green-800",
     red: "from-red-600 to-red-800",
@@ -40,36 +40,46 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
   return (
     <Section
       color={data.color}
-      className="hero-section min-h-[90vh] flex items-center relative"
+      className="hero-section min-h-[90vh] flex items-center relative overflow-hidden"
     >
-      {/* Industrial Background */}
-      <div className="absolute inset-0" style={{ zIndex: 0 }}>
-        <div className="absolute inset-0 bg-gradie t-industrial-steel opacity-40 dark:opacity-50"></div>
-        <div className="absolute inset-0 bg-pattern-industrial opacity-5"></div>
-        <div className="absolute inset-0 bg-gradient-industrial-radial opacity-20 dark:opacity-30"></div>
+      {/* Modern Dynamic Background */}
+      <div className="absolute inset-0 z-0">
+        {/* Primary gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-purple-500/5 to-blue-500/10"></div>
+
+        {/* Animated blob shapes */}
+        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-0 -right-4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       </div>
 
-      {/* Industrial Geometric Elements - Only visible on larger screens */}
-      <div className="hidden md:block" style={{ zIndex: 1 }}>
-        <div className="absolute top-20 left-10 w-32 h-1 bg-gray-500 opacity-20"></div>
-        <div className="absolute top-20 left-10 w-1 h-32 bg-gray-500 opacity-20"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-1 bg-gray-500 opacity-20"></div>
-        <div className="absolute bottom-20 right-10 w-1 h-32 bg-gray-500 opacity-20"></div>
-        <div className="absolute top-1/3 right-1/4 w-16 h-16 border-2 border-gray-500 opacity-15 rotate-45"></div>
+      {/* Geometric accent elements */}
+      <div className="hidden md:block absolute inset-0 z-1 pointer-events-none">
+        {/* Top left corner elements */}
+        <div className="absolute top-20 left-10 w-32 h-1 bg-primary/30 rotate-45 transform origin-left"></div>
+        <div className="absolute top-20 left-10 w-1 h-32 bg-primary/30 -rotate-45 transform origin-top"></div>
 
-        {/* Additional geometric elements for more industrial feel */}
-        <div className="absolute top-1/4 left-1/3 w-24 h-24 border border-gray-500 opacity-15"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-20 h-20 border border-gray-500 opacity-15"></div>
-        <div className="absolute top-2/3 left-2/3 w-12 h-12 border-2 border-gray-500 opacity-15 rotate-45"></div>
+        {/* Bottom right corner elements */}
+        <div className="absolute bottom-20 right-10 w-32 h-1 bg-primary/30 -rotate-45 transform origin-right"></div>
+        <div className="absolute bottom-20 right-10 w-1 h-32 bg-primary/30 rotate-45 transform origin-bottom"></div>
+
+        {/* Floating accent shapes */}
+        <div className="absolute top-1/3 right-1/4 w-16 h-16 border-2 border-primary/20 opacity-80 rotate-12 animate-float"></div>
+        <div className="absolute top-1/4 left-1/3 w-24 h-24 border border-purple-500/20 opacity-80 -rotate-12 animate-float animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-20 h-20 border border-blue-500/20 opacity-80 rotate-45 animate-float animation-delay-3000"></div>
       </div>
 
       <Container
         size="large"
-        className="hero-content grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-14 items-center justify-center py-12 md:py-20 relative z-10"
+        width="custom"
+        className="hero-content grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center justify-center py-12 md:py-20 relative z-10 max-w-8xl mx-auto"
       >
         <div
           ref={ref}
-          className="row-start-2 md:row-start-1 md:col-span-5 text-center md:text-left"
+          className="row-start-2 md:row-start-1 md:col-span-6 text-center md:text-left"
         >
           {data.tagline && (
             <h2
@@ -78,13 +88,9 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 isVisible
                   ? "animate-slideInFromBottom animate-delay-100"
                   : "opacity-0"
-              } relative inline-block px-3 py-1 mb-6 md:mb-8 text-sm md:text-md font-bold tracking-wide title-font z-20`}
+              } relative inline-block px-4 py-1.5 mb-6 md:mb-8 text-sm md:text-base font-bold tracking-wide title-font rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 text-primary dark:text-white`}
             >
               {data.tagline}
-              <span
-                className="absolute w-full h-full left-0 top-0 rounded-full bg-current opacity-7"
-                style={{ zIndex: -1 }}
-              ></span>
             </h2>
           )}
           {data.headline && (
@@ -94,12 +100,12 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 isVisible
                   ? "animate-slideInFromBottom animate-delay-200"
                   : "opacity-0"
-              } w-full relative mb-6 md:mb-10 text-3xl md:text-5xl font-extrabold tracking-normal leading-tight title-font`}
+              } w-full relative mb-6 md:mb-10 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight title-font`}
             >
               <span
-                className={`bg-clip-text text-transparent bg-gradient-to-r  ${
+                className={`bg-clip-text text-transparent bg-gradient-to-r ${
                   data.color === "primary"
-                    ? `from-white to-gray-100`
+                    ? `from-primary via-purple-600 to-blue-600`
                     : headlineColorClasses["blue"]
                 }`}
               >
@@ -108,7 +114,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
             </h3>
           )}
           <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex flex-col md:w-3/5">
+            <div className="flex flex-col md:w-full">
               {data.text && (
                 <div
                   data-tina-field={tinaField(data, "text")}
@@ -133,39 +139,21 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 </div>
               )}
               {data.actions && (
-                <div className="animate-slideInFromBottom animate-delay-500 mt-10">
+                <div
+                  className={`${
+                    isVisible
+                      ? "animate-slideInFromBottom animate-delay-500"
+                      : "opacity-0"
+                  } mt-8`}
+                >
                   <Actions
-                    className="justify-center md:justify-start py-2"
+                    className="justify-center md:justify-start py-2 gap-4"
                     parentColor={data.color}
                     actions={data.actions}
                   />
                 </div>
               )}
             </div>
-            {data.image && (
-              <div
-                data-tina-field={tinaField(data.image, "src")}
-                className={`${
-                  isVisible
-                    ? "animate-slideInFromRight animate-delay-400"
-                    : "opacity-0"
-                } relative flex-shrink-0 md:w-2/5 flex justify-center`}
-              >
-                <div className="relative overflow-hidden rounded-lg shadow-xl hover-lift">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-gray-700 to-gray-500 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
-                  <Image
-                    className="w-full h-auto max-w-full rounded-lg"
-                    style={{ objectFit: "cover" }}
-                    alt={data.image.alt}
-                    src={data.image.src}
-                    width={500}
-                    height={500}
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent"></div>
-                </div>
-              </div>
-            )}
           </div>
           {data.text2 && (
             <div
@@ -189,6 +177,44 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
             </div>
           )}
         </div>
+
+        {data.image && (
+          <div
+            data-tina-field={tinaField(data.image, "src")}
+            className={`${
+              isVisible
+                ? "animate-slideInFromRight animate-delay-400"
+                : "opacity-0"
+            } relative md:col-span-6 flex justify-center`}
+          >
+            <div className="relative overflow-hidden rounded-2xl shadow-2xl group w-full">
+              {/* Glow effect behind image */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+
+              <div className="relative rounded-2xl overflow-hidden">
+                <Image
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  alt={data.image.alt || "Hero image"}
+                  src={data.image.src}
+                  width={2400}
+                  height={2400}
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent"></div>
+              </div>
+
+              {/* Decorative corner accents */}
+              <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none">
+                <div className="absolute top-4 left-0 w-8 h-1 bg-primary/50"></div>
+                <div className="absolute top-0 left-4 w-1 h-8 bg-primary/50"></div>
+              </div>
+              <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none">
+                <div className="absolute bottom-4 right-0 w-8 h-1 bg-primary/50"></div>
+                <div className="absolute bottom-0 right-4 w-1 h-8 bg-primary/50"></div>
+              </div>
+            </div>
+          </div>
+        )}
       </Container>
     </Section>
   );
