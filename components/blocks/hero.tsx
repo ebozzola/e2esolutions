@@ -109,7 +109,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                     ? `from-primary via-purple-600 to-blue-600`
                     : headlineColorClasses["blue"]
                 }`}
-                delay={1500}
+                delay={1000}
                 duration={150}
                 startOnView={false}
               >
@@ -132,6 +132,19 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                       : `dark:prose-dark`
                   }`}
                 >
+                  {/* Extract a plain text summary for typing animation */}
+                  {data.text.children?.[0]?.children?.[0]?.text && (
+                    <TypingAnimation
+                      className="mb-4 text-base font-normal leading-normal tracking-normal"
+                      delay={1000}
+                      duration={10}
+                      startOnView={false}
+                    >
+                      {data.text.children[0].children[0].text}
+                    </TypingAnimation>
+                  )}
+
+                  {/* using typing animation instead
                   <TinaMarkdown
                     content={data.text}
                     components={{
@@ -140,6 +153,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                       },
                     }}
                   />
+                   */}
                 </div>
               )}
               {data.actions && (
