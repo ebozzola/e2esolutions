@@ -11,6 +11,7 @@ import { Container } from "../layout/container";
 import { Actions } from "./actions";
 import MermaidElement from "../mermaid-renderer";
 import { useInView } from "react-intersection-observer";
+import { TypingAnimation } from "../magicui/typing-animation";
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
   const [ref, inView] = useInView({
@@ -100,17 +101,20 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 isVisible
                   ? "animate-slideInFromBottom animate-delay-200"
                   : "opacity-0"
-              } w-full relative mb-6 md:mb-10 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight title-font`}
+              } w-full relative mb-6 md:mb-6 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight title-font`}
             >
-              <span
+              <TypingAnimation
                 className={`bg-clip-text text-transparent bg-gradient-to-r ${
                   data.color === "primary"
                     ? `from-primary via-purple-600 to-blue-600`
                     : headlineColorClasses["blue"]
                 }`}
+                delay={1500}
+                duration={150}
+                startOnView={false}
               >
                 {data.headline}
-              </span>
+              </TypingAnimation>
             </h3>
           )}
           <div className="flex flex-col md:flex-row gap-6">
@@ -219,6 +223,9 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
     </Section>
   );
 };
+
+// Revalidate the page every 60 seconds
+export const revalidate = 60;
 
 // Define the heroBlockSchema for Tina CMS
 export const heroBlockSchema: Template = {
