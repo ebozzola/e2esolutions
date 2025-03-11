@@ -3,6 +3,8 @@ import client from "@/tina/__generated__/client";
 import Layout from "@/components/layout/layout";
 import ClientPage from "./client-page";
 
+export const revalidate = 60;
+
 export default async function Page({
   params,
 }: {
@@ -30,10 +32,11 @@ export async function generateStaticParams() {
     allPages.data.pageConnection.edges.push(...pages.data.pageConnection.edges);
   }
 
-  const params = allPages.data?.pageConnection.edges.map((edge) => ({
-    filename: edge.node._sys.breadcrumbs,
-  })) || [];
+  const params =
+    allPages.data?.pageConnection.edges.map((edge) => ({
+      filename: edge.node._sys.breadcrumbs,
+    })) || [];
 
   // exclude the home page
-  return params.filter(p => !p.filename.every(x => x === "home"));
+  return params.filter((p) => !p.filename.every((x) => x === "home"));
 }
