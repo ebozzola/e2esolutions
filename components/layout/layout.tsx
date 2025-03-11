@@ -9,6 +9,8 @@ type LayoutProps = PropsWithChildren & {
   rawPageData?: any;
 };
 
+export const revalidate = 600;
+
 export default async function Layout({ children, rawPageData }: LayoutProps) {
   const { data: globalData } = await client.queries.global({
     relativePath: "index.json",

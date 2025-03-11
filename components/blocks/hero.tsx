@@ -238,9 +238,6 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
   );
 };
 
-// Revalidate the page every 60 seconds
-export const revalidate = 60;
-
 // Define the heroBlockSchema for Tina CMS
 export const heroBlockSchema: Template = {
   name: "hero",

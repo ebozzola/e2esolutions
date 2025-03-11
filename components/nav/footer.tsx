@@ -62,7 +62,7 @@ export default function Footer() {
             <Icon
               parentColor={footer.color}
               data={{
-                name: globalSettings?.header.icon.name,
+                name: "E2ELogoText",
                 color:
                   theme.color === "primary"
                     ? "primary"

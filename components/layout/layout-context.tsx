@@ -34,6 +34,8 @@ interface LayoutProviderProps {
   pageData: {};
 }
 
+export const revalidate = 600;
+
 export const LayoutProvider: React.FC<LayoutProviderProps> = ({
   children,
   globalSettings: initialGlobalSettings,

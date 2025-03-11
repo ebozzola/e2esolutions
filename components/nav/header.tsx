@@ -40,9 +40,6 @@ export default function Header() {
       <div className="absolute inset-0 bg-white/5 dark:bg-gray-900/5 z-0">
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-purple-500/5 to-blue-500/5"></div>
-
-        {/* Subtle blob in background */}
-        <div className="absolute -top-20 -right-20 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-5"></div>
         <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-5"></div>
       </div>
 
@@ -60,6 +57,7 @@ export default function Header() {
                   name: header.icon.name,
                   color: header.icon.color,
                   style: header.icon.style,
+                  size: "xl",
                 }}
               />{" "}
               <span data-tina-field={tinaField(header, "name")}>

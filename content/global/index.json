@@ -40,6 +40,11 @@
   },
   "footer": {
     "color": "default",
+    "icon": {
+      "name": "E2ELogoText",
+      "color": "blue",
+      "style": "float"
+    },
     "social": {
       "facebook": "",
       "twitter": "",

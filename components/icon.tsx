@@ -7,6 +7,16 @@ import Image from "next/image";
 export const IconOptions = {
   E2ELogo: (props) => (
     <Image
+      src="/logo-notext.svg"
+      alt="E2E Solutions Logo"
+      width={40}
+      height={40}
+      className={props.className}
+      priority
+    />
+  ),
+  E2ELogoText: (props) => (
+    <Image
       src="/logo.svg"
       alt="E2E Solutions Logo"
       width={40}

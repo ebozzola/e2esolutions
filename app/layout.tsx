@@ -101,6 +101,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 600;
+
 export default async function RootLayout({
   children,
 }: {
