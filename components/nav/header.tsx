@@ -57,7 +57,7 @@ export default function Header() {
                   name: header.icon.name,
                   color: header.icon.color,
                   style: header.icon.style,
-                  size: "xl",
+                  size: "medium",
                 }}
               />{" "}
               <span data-tina-field={tinaField(header, "name")}>

@@ -18,7 +18,7 @@ export default function Footer() {
   const { theme, globalSettings } = useLayout();
   const footer = globalSettings?.footer;
 
-  const socialIconClasses = "h-7 w-auto";
+  const socialIconClasses = "h-5 w-auto transition-colors duration-200";
   const socialIconColorClasses = {
     blue: "text-blue-500 dark:text-blue-400 hover:text-blue-300",
     teal: "text-teal-500 dark:text-teal-400 hover:text-teal-300",
@@ -33,16 +33,16 @@ export default function Footer() {
 
   const footerColor = {
     default:
-      "text-gray-800 from-white to-gray-50 dark:from-gray-900 dark:to-gray-1000",
+      "bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-200",
     primary: {
-      blue: "text-white from-blue-500 to-blue-700",
-      teal: "text-white from-teal-500 to-teal-600",
-      green: "text-white from-green-500 to-green-600",
-      red: "text-white from-red-500 to-red-600",
-      pink: "text-white from-pink-500 to-pink-600",
-      purple: "text-white from-purple-500 to-purple-600",
-      orange: "text-white from-orange-500 to-orange-600",
-      yellow: "text-white from-yellow-500 to-yellow-600",
+      blue: "bg-gradient-to-br from-blue-600 to-blue-800 text-white",
+      teal: "bg-gradient-to-br from-teal-600 to-teal-800 text-white",
+      green: "bg-gradient-to-br from-green-600 to-green-800 text-white",
+      red: "bg-gradient-to-br from-red-600 to-red-800 text-white",
+      pink: "bg-gradient-to-br from-pink-600 to-pink-800 text-white",
+      purple: "bg-gradient-to-br from-purple-600 to-purple-800 text-white",
+      orange: "bg-gradient-to-br from-orange-600 to-orange-800 text-white",
+      yellow: "bg-gradient-to-br from-yellow-600 to-yellow-800 text-white",
     },
   };
 
@@ -52,128 +52,216 @@ export default function Footer() {
       : footerColor.default;
 
   return (
-    <footer className={cn(`bg-gradient-to-br`, footerColorCss)}>
-      <Container className="relative" size="small">
-        <div className="flex justify-between items-center gap-6 flex-wrap">
-          <Link
-            href="/"
-            className="group mx-2 flex items-center font-bold tracking-tight text-gray-400 dark:text-gray-300 opacity-50 hover:opacity-100 transition duration-150 ease-out whitespace-nowrap"
-          >
-            <Icon
-              parentColor={footer.color}
-              data={{
-                name: "E2ELogoText",
-                color:
-                  theme.color === "primary"
-                    ? "primary"
-                    : globalSettings?.header.icon.color,
-                style: globalSettings?.header.icon.style,
-              }}
-              className="inline-block h-10 w-auto group-hover:text-orange-500"
-            />
-          </Link>
-          <div className="flex gap-4">
-            {footer.social && footer.social.facebook && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={footer.social.facebook}
-                target="_blank"
+    <footer className={cn(`py-12 md:py-16`, footerColorCss)}>
+      <Container size="small">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* Company Info Section */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="inline-flex items-center gap-3">
+              <Icon
+                parentColor={footer.color}
+                data={{
+                  name: "E2ELogo",
+                  color:
+                    theme.color === "primary"
+                      ? "primary"
+                      : globalSettings?.header.icon.color,
+                  style: globalSettings?.header.icon.style,
+                  size: "medium",
+                }}
+              />
+              <span className="text-2xl font-bold tracking-tight">
+                E2E Solutions
+              </span>
+            </Link>
+            <p className="text-sm opacity-80 mt-4">
+              Providing comprehensive IT solutions to empower your business
+              growth.
+            </p>
+            <div className="flex gap-4 pt-4">
+              {footer.social?.facebook && (
+                <a
+                  href={footer.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  <FaFacebookF
+                    className={`${socialIconClasses} ${
+                      socialIconColorClasses[
+                        footer.color === "primary" ? "primary" : theme.color
+                      ]
+                    }`}
+                  />
+                </a>
+              )}
+              {footer.social && footer.social.twitter && (
+                <a
+                  className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+                  href={footer.social.twitter}
+                  target="_blank"
+                >
+                  <FaXTwitter
+                    className={`${socialIconClasses} ${
+                      socialIconColorClasses[
+                        footer.color === "primary" ? "primary" : theme.color
+                      ]
+                    }`}
+                  />
+                </a>
+              )}
+              {footer.social && footer.social.instagram && (
+                <a
+                  className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+                  href={footer.social.instagram}
+                  target="_blank"
+                >
+                  <AiFillInstagram
+                    className={`${socialIconClasses} ${
+                      socialIconColorClasses[
+                        footer.color === "primary" ? "primary" : theme.color
+                      ]
+                    }`}
+                  />
+                </a>
+              )}
+              {footer.social && footer.social.linkedIn && (
+                <a
+                  className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+                  href={footer.social.linkedIn}
+                  target="_blank"
+                >
+                  <FaLinkedin
+                    className={`${socialIconClasses} ${
+                      socialIconColorClasses[
+                        footer.color === "primary" ? "primary" : theme.color
+                      ]
+                    }`}
+                  />
+                </a>
+              )}
+              {footer.social && footer.social.github && (
+                <a
+                  className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+                  href={footer.social.github}
+                  target="_blank"
+                >
+                  <FaGithub
+                    className={`${socialIconClasses} ${
+                      socialIconColorClasses[
+                        footer.color === "primary" ? "primary" : theme.color
+                      ]
+                    }`}
+                  />
+                </a>
+              )}
+              {footer.social && footer.social.youtube && (
+                <a
+                  className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
+                  href={footer.social.youtube}
+                  target="_blank"
+                >
+                  <FaYoutube
+                    className={`${socialIconClasses} ${
+                      socialIconColorClasses[
+                        footer.color === "primary" ? "primary" : theme.color
+                      ]
+                    }`}
+                  />
+                </a>
+              )}
+            </div>
+          </div>
+          {/* Company Links Section */}
+          <div className="lg:col-span-1">
+            <h3 className="font-semibold text-lg mb-4">Company</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/about"
+                  className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/our-team"
+                  className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  Our Team
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+          {/* Solutions Section */}
+          <div className="lg:col-span-1">
+            <h3 className="font-semibold text-lg mb-4">Solutions</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/services"
+                  className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/areas-of-excellence"
+                  className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  Areas of Excellence
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/case-studies"
+                  className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  Case Studies
+                </Link>
+              </li>
+            </ul>
+          </div>
+          {/* Newsletter Section 
+          <div className="lg:col-span-1">
+            <h3 className="font-semibold text-lg mb-4">Stay Updated</h3>
+            <p className="text-sm opacity-80 mb-4">
+              Subscribe to our newsletter for the latest updates and insights.
+            </p>
+            <form className="space-y-2">
+              <input
+                type="email"
+                placeholder="Your email"
+                className="w-full px-4 py-2 rounded-md bg-black/10 dark:bg-white/5 border border-gray-300/20 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-current text-sm placeholder-gray-500 dark:placeholder-gray-400"
+              />
+              <button
+                type="submit"
+                className="w-full px-4 py-2 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 rounded-md transition-colors duration-200 text-sm font-medium"
               >
-                <FaFacebookF
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      footer.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {footer.social && footer.social.twitter && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={footer.social.twitter}
-                target="_blank"
-              >
-                <FaXTwitter
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      footer.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {footer.social && footer.social.instagram && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={footer.social.instagram}
-                target="_blank"
-              >
-                <AiFillInstagram
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      footer.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {footer.social && footer.social.linkedIn && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={footer.social.linkedIn}
-                target="_blank"
-              >
-                <FaLinkedin
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      footer.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {footer.social && footer.social.github && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={footer.social.github}
-                target="_blank"
-              >
-                <FaGithub
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      footer.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
-            {footer.social && footer.social.youtube && (
-              <a
-                className="inline-block opacity-80 hover:opacity-100 transition ease-out duration-150"
-                href={footer.social.youtube}
-                target="_blank"
-              >
-                <FaYoutube
-                  className={`${socialIconClasses} ${
-                    socialIconColorClasses[
-                      footer.color === "primary" ? "primary" : theme.color
-                    ]
-                  }`}
-                />
-              </a>
-            )}
+                Subscribe
+              </button>
+            </form>
+          </div>
+          */}
+        </div>
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-8 border-t border-black/10 dark:border-white/10">
+          <div className="flex justify-center">
+            <p className="text-sm opacity-60">
+              © {new Date().getFullYear()} E2E Solutions. All rights reserved.
+            </p>
           </div>
         </div>
-        <div
-          className={cn(
-            `absolute h-1 bg-gradient-to-r from-transparent`,
-            theme.darkMode === "primary"
-              ? `via-white`
-              : `via-black dark:via-white`,
-            "to-transparent bottom-0 left-4 right-4 -z-1 opacity-5"
-          )}
-        />
       </Container>
     </footer>
   );

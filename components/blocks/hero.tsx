@@ -12,6 +12,7 @@ import { Actions } from "./actions";
 import MermaidElement from "../mermaid-renderer";
 import { useInView } from "react-intersection-observer";
 import { TypingAnimation } from "../magicui/typing-animation";
+import { IconOptions } from "../icon";
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
   const [ref, inView] = useInView({
@@ -48,13 +49,20 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
         {/* Primary gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-purple-500/5 to-blue-500/10"></div>
 
+        {/* Logo pattern using Icon component */}
+        <div className="absolute inset-0 grid grid-cols-6 gap-12 p-8 opacity-[0.02]">
+          {[...Array(24)].map((_, index) => (
+            <IconOptions.E2ELogo
+              key={index}
+              className="w-full h-full opacity-50 transform rotate-0 hover:rotate-45 transition-transform duration-1000"
+            />
+          ))}
+        </div>
+
         {/* Animated blob shapes */}
         <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute top-0 -right-4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-8 left-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-
-        {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       </div>
 
       {/* Geometric accent elements */}
@@ -67,10 +75,16 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
         <div className="absolute bottom-20 right-10 w-32 h-1 bg-primary/30 -rotate-45 transform origin-right"></div>
         <div className="absolute bottom-20 right-10 w-1 h-32 bg-primary/30 rotate-45 transform origin-bottom"></div>
 
-        {/* Floating accent shapes */}
-        <div className="absolute top-1/3 right-1/4 w-16 h-16 border-2 border-primary/20 opacity-80 rotate-12 animate-float"></div>
-        <div className="absolute top-1/4 left-1/3 w-24 h-24 border border-purple-500/20 opacity-80 -rotate-12 animate-float animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-20 h-20 border border-blue-500/20 opacity-80 rotate-45 animate-float animation-delay-3000"></div>
+        {/* Floating accent logos */}
+        <div className="absolute top-1/3 right-1/4 opacity-20 rotate-12 animate-float">
+          <IconOptions.E2ELogo className="w-16 h-16" />
+        </div>
+        <div className="absolute top-1/4 left-1/3 opacity-20 -rotate-12 animate-float animation-delay-2000">
+          <IconOptions.E2ELogo className="w-24 h-24" />
+        </div>
+        <div className="absolute bottom-1/4 right-1/3 opacity-20 rotate-45 animate-float animation-delay-3000">
+          <IconOptions.E2ELogo className="w-20 h-20" />
+        </div>
       </div>
 
       <Container
@@ -110,7 +124,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                     : headlineColorClasses["blue"]
                 }`}
                 delay={1000}
-                duration={150}
+                duration={30}
                 startOnView={false}
               >
                 {data.headline}
