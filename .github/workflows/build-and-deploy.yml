@@ -96,6 +96,16 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
+      - name: Clean Tina Cache
+        run: rm -rf .tina/__generated__
+
+      - name: Generate Tina Schema
+        env:
+          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
+          NEXT_PUBLIC_TINA_BRANCH: ${{ github.ref_name }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+        run: ${{ steps.detect-package-manager.outputs.runner }} tinacms dev
+
       - name: Build TinaCMS
         env:
           NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
@@ -109,6 +119,14 @@ jobs:
           NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
           NEXT_PUBLIC_TINA_BRANCH: ${{ github.ref_name }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+
+      - name: Verify Static Generation
+        run: |
+          if [ ! -d "out" ]; then
+            echo "Static generation failed - out directory not found"
+            exit 1
+          fi
+          echo "Static generation successful"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

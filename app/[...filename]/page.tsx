@@ -3,6 +3,9 @@ import client from "@/tina/__generated__/client";
 import Layout from "@/components/layout/layout";
 import ClientPage from "./client-page";
 
+export const revalidate = 600;
+
+
 export default async function Page({
   params,
 }: {
@@ -19,7 +22,6 @@ export default async function Page({
   );
 }
 
-export const revalidate = 600;
 export async function generateStaticParams() {
   let pages = await client.queries.pageConnection();
   const allPages = pages;
