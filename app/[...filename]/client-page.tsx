@@ -13,6 +13,7 @@ export interface ClientPageProps {
   query: string;
 }
 
+export const revalidate = 600;
 export default function ClientPage(props: ClientPageProps) {
   const { data } = useTina({...props});
   return <Blocks {...data?.page} />;

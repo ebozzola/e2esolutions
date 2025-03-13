@@ -19,6 +19,7 @@ export default async function Page({
   );
 }
 
+export const revalidate = 600;
 export async function generateStaticParams() {
   let pages = await client.queries.pageConnection();
   const allPages = pages;
