@@ -97,14 +97,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Clean Tina Cache
-        run: rm -rf .tina/__generated__
-
-      - name: Generate Tina Schema
-        env:
-          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
-          NEXT_PUBLIC_TINA_BRANCH: ${{ github.ref_name }}
-          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-        run: ${{ steps.detect-package-manager.outputs.runner }} tinacms dev
+        run: rm -rf .tina/__generated__ 
 
       - name: Build TinaCMS
         env:
