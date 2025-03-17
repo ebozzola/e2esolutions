@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { Inter as FontSans, Lato, Nunito } from "next/font/google";
 import { cn } from "@/lib/utils";
 import client from "@/tina/__generated__/client";
-import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "@/styles.css";
 
@@ -142,18 +142,7 @@ export default async function RootLayout({
         {children}
 
         {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-CF1KZER35W"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-CF1KZER35W');
-          `}
-        </Script>
+        <GoogleAnalytics gaId="G-CF1KZER35W" />
       </body>
     </html>
   );
