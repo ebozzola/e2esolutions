@@ -75,8 +75,8 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm opacity-80 mt-4">
-              Providing comprehensive IT solutions to empower your business
-              growth.
+              Providing comprehensive operational solutions to empower your
+              business growth.
             </p>
             <div className="flex gap-4 pt-4">
               {footer.social?.facebook && (
@@ -222,14 +222,14 @@ export default function Footer() {
                   Areas of Excellence
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/case-studies"
                   className="text-sm opacity-80 hover:opacity-100 transition-opacity"
                 >
                   Case Studies
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           {/* Newsletter Section 

@@ -1,11 +1,14 @@
 import type { Collection } from "tinacms";
-import { heroBlockSchema } from "@/components/blocks/hero";
-import { contentBlockSchema } from "@/components/blocks/content";
-import { testimonialBlockSchema } from "@/components/blocks/testimonial";
-import { featureBlockSchema } from "@/components/blocks/features";
-import { videoBlockSchema } from "@/components/blocks/video";
-import { caseStudiesBlockSchema } from "@/components/blocks/case-studies";
-import { contactFormBlockSchema } from "@/components/blocks/contact-form";
+import { heroBlockSchema } from "../../components/blocks/hero";
+import { contentBlockSchema } from "../../components/blocks/content";
+import { testimonialBlockSchema } from "../../components/blocks/testimonial";
+import { testimonialCarouselBlockSchema } from "../../components/blocks/testimonial-carousel";
+import { featureBlockSchema } from "../../components/blocks/features";
+import { featureTeamsBlockSchema } from "../../components/blocks/feature-teams";
+import { videoBlockSchema } from "../../components/blocks/video";
+import { caseStudiesBlockSchema } from "../../components/blocks/case-studies";
+import { contactFormBlockSchema } from "../../components/blocks/contact-form";
+import { faqBlockSchema } from "../../components/blocks/faq";
 
 const Page: Collection = {
   label: "Pages",
@@ -17,7 +20,7 @@ const Page: Collection = {
       if (document._sys.filename === "home") {
         return `/`;
       }
-      return undefined;
+      return `/${document._sys.filename}`;
     },
   },
   fields: [
@@ -40,13 +43,18 @@ const Page: Collection = {
       },
       templates: [
         heroBlockSchema,
-        //@ts-ignore
-        featureBlockSchema,
         contentBlockSchema,
         testimonialBlockSchema,
+        // @ts-ignore
+        testimonialCarouselBlockSchema,
+        // @ts-ignore
+        featureBlockSchema,
+        // @ts-ignore
+        featureTeamsBlockSchema,
         videoBlockSchema,
         caseStudiesBlockSchema,
         contactFormBlockSchema,
+        faqBlockSchema,
       ],
     },
   ],

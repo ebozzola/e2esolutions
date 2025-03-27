@@ -5,7 +5,6 @@ import ClientPage from "./client-page";
 
 export const revalidate = 600;
 
-
 export default async function Page({
   params,
 }: {

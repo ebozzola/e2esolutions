@@ -86,6 +86,20 @@ module.exports = {
       4: "4px",
     },
     extend: {
+      keyframes: {
+        slideInFromBottom: {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        modalEntry: {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+      },
+      animation: {
+        slideInFromBottom: "slideInFromBottom 0.3s ease-out forwards",
+        modalEntry: "modalEntry 0.3s ease-out forwards",
+      },
       textDecoration: ["active"],
       opacity: {
         7: ".075",
