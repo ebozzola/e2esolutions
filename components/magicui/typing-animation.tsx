@@ -2,89 +2,55 @@
 
 import { cn } from "@/lib/utils";
 import { motion, MotionProps } from "motion/react";
-import { ElementType, useEffect, useRef, useState } from "react";
+import { ElementType } from "react";
 
+/**
+ * Props for the TypingAnimation component
+ * @interface TypingAnimationProps
+ * @extends MotionProps - Framer Motion props
+ */
 interface TypingAnimationProps extends MotionProps {
+  /** The text content to display */
   children: string;
+  /** Additional CSS classes */
   className?: string;
+  /** Duration parameter (kept for API compatibility) */
   duration?: number;
+  /** Delay parameter (kept for API compatibility) */
   delay?: number;
+  /** HTML element type to render as */
   as?: ElementType;
-  startOnView?: boolean;
 }
 
+/**
+ * TypingAnimation component
+ *
+ * Note: This component previously implemented a character-by-character typing animation,
+ * but has been modified to display text normally without animation.
+ * The props interface is maintained for compatibility with existing code.
+ */
 export function TypingAnimation({
   children,
   className,
   duration = 100,
   delay = 0,
   as: Component = "div",
-  startOnView = false,
   ...props
 }: TypingAnimationProps) {
   const MotionComponent = motion.create(Component, {
     forwardMotionProps: true,
   });
 
-  const [displayedText, setDisplayedText] = useState<string>("");
-  const [started, setStarted] = useState(false);
-  const elementRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    if (!startOnView) {
-      const startTimeout = setTimeout(() => {
-        setStarted(true);
-      }, delay);
-      return () => clearTimeout(startTimeout);
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            setStarted(true);
-          }, delay);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [delay, startOnView]);
-
-  useEffect(() => {
-    if (!started) return;
-
-    let i = 0;
-    const typingEffect = setInterval(() => {
-      if (i < children.length) {
-        setDisplayedText(children.substring(0, i + 1));
-        i++;
-      } else {
-        clearInterval(typingEffect);
-      }
-    }, duration);
-
-    return () => {
-      clearInterval(typingEffect);
-    };
-  }, [children, duration, started]);
-
+  // Directly render the full text without animation
   return (
     <MotionComponent
-      ref={elementRef}
       className={cn(
         "text-4xl font-bold leading-[5rem] tracking-[-0.02em]",
         className
       )}
       {...props}
     >
-      {displayedText}
+      {children}
     </MotionComponent>
   );
 }

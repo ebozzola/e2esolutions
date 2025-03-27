@@ -1,25 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import type { Template } from "tinacms";
 import { PageBlocksTestimonial } from "../../tina/__generated__/types";
 import { tinaField } from "tinacms/dist/react";
 import { Section } from "../layout/section";
 import { Container } from "../layout/container";
-import { useInView } from "react-intersection-observer";
 
 export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (inView) {
-      setIsVisible(true);
-    }
-  }, [inView]);
-
   return (
     <Section
       color={data.color}
@@ -64,19 +50,12 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
 
       <Container size="large" className="relative z-10">
         <div className="max-w-4xl mx-auto">
-          <blockquote
-            ref={ref}
-            className={`${
-              isVisible ? "animate-fadeIn" : "opacity-0"
-            } transition-all duration-700 ease-out bg-white/10 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-xl`}
-          >
+          <blockquote className="transition-all duration-700 ease-out bg-white/10 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-xl">
             <div className="relative">
               {/* Quote marks */}
               <span
                 className={`absolute -top-10 -left-6 text-8xl ${
                   data.color === "primary" ? "text-white/20" : "text-primary/20"
-                } ${
-                  isVisible ? "animate-fadeIn animate-delay-300" : "opacity-0"
                 }`}
               >
                 &ldquo;
@@ -100,8 +79,6 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
               <span
                 className={`absolute -bottom-20 -right-6 text-8xl ${
                   data.color === "primary" ? "text-white/20" : "text-primary/20"
-                } ${
-                  isVisible ? "animate-fadeIn animate-delay-300" : "opacity-0"
                 }`}
               >
                 &rdquo;
@@ -109,11 +86,7 @@ export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
             </div>
 
             <div className="mt-8 pt-6 border-t border-white/10 flex items-center">
-              <div
-                className={`w-12 h-12 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg mr-4 ${
-                  isVisible ? "animate-pulse" : ""
-                }`}
-              >
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white font-bold text-lg mr-4 animate-pulse">
                 {data.author ? data.author.charAt(0) : ""}
               </div>
               <div>

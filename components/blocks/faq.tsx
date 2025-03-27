@@ -5,9 +5,8 @@ import { tinaField } from "tinacms/dist/react";
 import { Section } from "../layout/section";
 import { Container } from "../layout/container";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { useInView } from "react-intersection-observer";
-import { PageBlocksFaq } from "../../tina/__generated__/types";
 import { motion, AnimatePresence } from "framer-motion";
+import { PageBlocksFaq } from "../../tina/__generated__/types";
 
 // Define the types for our FAQ items
 interface FAQItemType {
@@ -29,7 +28,6 @@ const FAQItem = ({ item, index }: { item: FAQItemType; index: number }) => {
       className={`mb-4 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm transition-all duration-300 ${
         isOpen ? "shadow-lg" : "shadow"
       }`}
-      style={{ animationDelay: `${index * 100}ms` }}
     >
       <button
         data-tina-field={tinaField(item, "question")}
@@ -102,11 +100,6 @@ const FAQItem = ({ item, index }: { item: FAQItemType; index: number }) => {
 
 // Main FAQ component
 export const FAQ = ({ data }: FAQProps) => {
-  const [ref] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   return (
     <Section
       color={data.color}
@@ -130,12 +123,9 @@ export const FAQ = ({ data }: FAQProps) => {
       </div>
 
       <Container size="large" className="relative z-10">
-        <div ref={ref} className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {data.title && (
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+            <h2
               data-tina-field={tinaField(data, "title")}
               className={`text-3xl md:text-4xl font-bold text-center mb-4 ${
                 data.color === "primary"
@@ -144,14 +134,11 @@ export const FAQ = ({ data }: FAQProps) => {
               }`}
             >
               {data.title}
-            </motion.h2>
+            </h2>
           )}
 
           {data.subtitle && (
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+            <p
               data-tina-field={tinaField(data, "subtitle")}
               className={`text-xl text-center mb-12 ${
                 data.color === "primary"
@@ -160,40 +147,16 @@ export const FAQ = ({ data }: FAQProps) => {
               }`}
             >
               {data.subtitle}
-            </motion.p>
+            </p>
           )}
 
-          <motion.div
-            className="space-y-4"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                  delayChildren: 0.3,
-                },
-              },
-            }}
-          >
+          <div className="space-y-4">
             {data.items?.map((item, index) => (
-              <motion.div
-                key={index}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.4 },
-                  },
-                }}
-              >
+              <div key={index}>
                 <FAQItem item={item} index={index} />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </Container>
     </Section>

@@ -10,24 +10,10 @@ import { Section } from "../layout/section";
 import { Container } from "../layout/container";
 import { Actions } from "./actions";
 import MermaidElement from "../mermaid-renderer";
-import { useInView } from "react-intersection-observer";
 import { TypingAnimation } from "../magicui/typing-animation";
 import { IconOptions } from "../icon";
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (inView) {
-      setIsVisible(true);
-    }
-  }, [inView]);
-
   const headlineColorClasses = {
     blue: "from-blue-600 to-blue-800",
     teal: "from-teal-600 to-teal-800",
@@ -92,18 +78,11 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
         width="custom"
         className="hero-content grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center justify-center py-12 md:py-20 relative z-10 max-w-8xl mx-auto"
       >
-        <div
-          ref={ref}
-          className="row-start-2 md:row-start-1 md:col-span-6 text-center md:text-left"
-        >
+        <div className="row-start-2 md:row-start-1 md:col-span-6 text-center md:text-left">
           {data.tagline && (
             <h2
               data-tina-field={tinaField(data, "tagline")}
-              className={`${
-                isVisible
-                  ? "animate-slideInFromBottom animate-delay-100"
-                  : "opacity-0"
-              } relative inline-block px-4 py-1.5 mb-6 md:mb-8 text-sm md:text-base font-bold tracking-wide title-font rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 text-primary dark:text-white`}
+              className="relative inline-block px-4 py-1.5 mb-6 md:mb-8 text-sm md:text-base font-bold tracking-wide title-font rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 text-primary dark:text-white"
             >
               {data.tagline}
             </h2>
@@ -111,11 +90,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.headline && (
             <h3
               data-tina-field={tinaField(data, "headline")}
-              className={`${
-                isVisible
-                  ? "animate-slideInFromBottom animate-delay-200"
-                  : "opacity-0"
-              } w-full relative mb-6 md:mb-6 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight title-font`}
+              className="w-full relative mb-6 md:mb-6 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight title-font"
             >
               <TypingAnimation
                 className={`bg-clip-text text-transparent bg-gradient-to-r ${
@@ -123,9 +98,6 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                     ? `from-primary via-purple-600 to-blue-600`
                     : headlineColorClasses["blue"]
                 }`}
-                delay={1000}
-                duration={30}
-                startOnView={false}
               >
                 {data.headline}
               </TypingAnimation>
@@ -136,24 +108,15 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
               {data.text && (
                 <div
                   data-tina-field={tinaField(data, "text")}
-                  className={`${
-                    isVisible
-                      ? "animate-slideInFromBottom animate-delay-300"
-                      : "opacity-0"
-                  } prose prose-lg mx-auto md:mx-0 mb-10 ${
+                  className={`prose prose-lg mx-auto md:mx-0 mb-10 ${
                     data.color === "primary"
-                      ? `prose-primary`
-                      : `dark:prose-dark`
+                      ? "prose-primary"
+                      : "dark:prose-dark"
                   }`}
                 >
                   {/* Extract a plain text summary for typing animation */}
                   {data.text.children?.[0]?.children?.[0]?.text && (
-                    <TypingAnimation
-                      className="mb-4 text-base font-normal leading-normal tracking-normal"
-                      delay={1000}
-                      duration={10}
-                      startOnView={false}
-                    >
+                    <TypingAnimation className="mb-4 text-base font-normal leading-normal tracking-normal">
                       {data.text.children[0].children[0].text}
                     </TypingAnimation>
                   )}
@@ -171,13 +134,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 </div>
               )}
               {data.actions && (
-                <div
-                  className={`${
-                    isVisible
-                      ? "animate-slideInFromBottom animate-delay-500"
-                      : "opacity-0"
-                  } mt-8`}
-                >
+                <div className="mt-8">
                   <Actions
                     className="justify-center md:justify-start py-2 gap-4"
                     parentColor={data.color}
@@ -190,12 +147,8 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           {data.text2 && (
             <div
               data-tina-field={tinaField(data, "text2")}
-              className={`${
-                isVisible
-                  ? "animate-slideInFromBottom animate-delay-400"
-                  : "opacity-0"
-              } prose prose-lg mx-auto md:mx-0 mb-10 ${
-                data.color === "primary" ? `prose-primary` : `dark:prose-dark`
+              className={`prose prose-lg mx-auto md:mx-0 mb-10 ${
+                data.color === "primary" ? "prose-primary" : "dark:prose-dark"
               }`}
             >
               <TinaMarkdown
@@ -213,11 +166,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
         {data.image && (
           <div
             data-tina-field={tinaField(data.image, "src")}
-            className={`${
-              isVisible
-                ? "animate-slideInFromRight animate-delay-400"
-                : "opacity-0"
-            } relative md:col-span-6 flex justify-center`}
+            className="relative md:col-span-6 flex justify-center"
           >
             <div className="relative overflow-hidden rounded-2xl shadow-2xl group w-full">
               {/* Glow effect behind image */}
