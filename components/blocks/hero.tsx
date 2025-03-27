@@ -93,11 +93,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
               className="w-full relative mb-6 md:mb-6 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight title-font"
             >
               <TypingAnimation
-                className={`bg-clip-text text-transparent bg-gradient-to-r ${
-                  data.color === "primary"
-                    ? `from-primary via-purple-600 to-blue-600`
-                    : headlineColorClasses["blue"]
-                }`}
+                className={`bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-600 to-purple-500`}
               >
                 {data.headline}
               </TypingAnimation>

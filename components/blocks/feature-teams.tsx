@@ -8,8 +8,7 @@ import { Icon } from "../icon";
 import { Section } from "../layout/section";
 import { Container } from "../layout/container";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 // Modal component for displaying full team member details
@@ -164,34 +163,17 @@ export const FeatureTeamItem = ({
   data: PageBlocksFeatureTeamsItems;
   index: number;
 }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (inView) {
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, index * 100);
-      return () => clearTimeout(timer);
-    }
-  }, [inView, index]);
 
   return (
     <>
       <div
-        ref={ref}
         data-tina-field={tinaField(data)}
         className={`feature-card flex flex-col gap-4
           w-full 
           md:w-[calc(50%-1rem)] 
           xl:w-[calc(33.333%-1.5rem)]
-          ${isVisible ? "animate-slideInFromBottom" : "opacity-0"} 
           group relative p-6 mb-6 rounded-xl bg-white/50 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden
           cursor-pointer`}
         onMouseEnter={() => setIsHovered(true)}
