@@ -8,7 +8,7 @@ import { Icon } from "../icon";
 import { Section } from "../layout/section";
 import { Container } from "../layout/container";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 // Modal component for displaying full team member details
