@@ -20,12 +20,6 @@ export default async function PostsPage() {
       );
     }
 
-    // Filter out draft posts
-    allPosts.data.postConnection.edges =
-      allPosts.data.postConnection.edges.filter(
-        (edge) => edge.node.draft !== true
-      );
-
     allPosts.data.postConnection.edges.reverse();
 
     return (
