@@ -2,6 +2,9 @@
   "name": "new",
   "version": "0.1.0",
   "private": true,
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3", "esbuild"]
+  },
   "scripts": {
     "dev": " tinacms dev -c \"next dev\"",
     "build": "tinacms build && next build",
