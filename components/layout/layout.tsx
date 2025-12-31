@@ -6,6 +6,7 @@ import Footer from "../nav/footer";
 import { cn } from "../../lib/utils";
 
 type LayoutProps = PropsWithChildren & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rawPageData?: any;
 };
 

@@ -1,15 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, MotionProps } from "motion/react";
-import { ElementType } from "react";
 
 /**
  * Props for the TypingAnimation component
- * @interface TypingAnimationProps
- * @extends MotionProps - Framer Motion props
  */
-interface TypingAnimationProps extends MotionProps {
+interface TypingAnimationProps {
   /** The text content to display */
   children: string;
   /** Additional CSS classes */
@@ -18,8 +14,6 @@ interface TypingAnimationProps extends MotionProps {
   duration?: number;
   /** Delay parameter (kept for API compatibility) */
   delay?: number;
-  /** HTML element type to render as */
-  as?: ElementType;
 }
 
 /**
@@ -32,25 +26,16 @@ interface TypingAnimationProps extends MotionProps {
 export function TypingAnimation({
   children,
   className,
-  duration = 100,
-  delay = 0,
-  as: Component = "div",
-  ...props
 }: TypingAnimationProps) {
-  const MotionComponent = motion.create(Component, {
-    forwardMotionProps: true,
-  });
-
   // Directly render the full text without animation
   return (
-    <MotionComponent
+    <span
       className={cn(
         "text-4xl font-bold leading-[5rem] tracking-[-0.02em]",
         className
       )}
-      {...props}
     >
       {children}
-    </MotionComponent>
+    </span>
   );
 }

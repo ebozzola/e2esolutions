@@ -15,11 +15,10 @@ import Image from "next/image";
 export const Feature = ({
   featuresColor,
   data,
-  index,
 }: {
   featuresColor: string;
   data: PageBlocksFeaturesItems;
-  index: number;
+  index?: number;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 

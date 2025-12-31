@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import type { Template } from "tinacms";
 import { PageBlocksHero } from "../../tina/__generated__/types";
@@ -14,17 +13,6 @@ import { TypingAnimation } from "../magicui/typing-animation";
 import { IconOptions } from "../icon";
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
-  const headlineColorClasses = {
-    blue: "from-blue-600 to-blue-800",
-    teal: "from-teal-600 to-teal-800",
-    green: "from-green-600 to-green-800",
-    red: "from-red-600 to-red-800",
-    pink: "from-pink-600 to-pink-800",
-    purple: "from-purple-600 to-purple-800",
-    orange: "from-orange-500 to-orange-700",
-    yellow: "from-yellow-600 to-yellow-800",
-  };
-
   return (
     <Section
       color={data.color ?? undefined}

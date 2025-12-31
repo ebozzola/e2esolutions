@@ -8,18 +8,12 @@ import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageBlocksFaq } from "../../tina/__generated__/types";
 
-// Define the types for our FAQ items
-interface FAQItemType {
-  question?: string;
-  answer?: any; // Rich text content
-}
-
 interface FAQProps {
   data: PageBlocksFaq;
 }
 
 // Individual FAQ Item component
-const FAQItem = ({ item, index }: { item: any; index: number }) => {
+const FAQItem = ({ item }: { item: NonNullable<NonNullable<PageBlocksFaq["items"]>[number]> }) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +24,7 @@ const FAQItem = ({ item, index }: { item: any; index: number }) => {
       }`}
     >
       <button
-        data-tina-field={tinaField(item, "question")}
+        data-tina-field={item ? tinaField(item, "question") : undefined}
         className="flex justify-between items-center w-full p-5 text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -89,7 +83,7 @@ const FAQItem = ({ item, index }: { item: any; index: number }) => {
               exit={{ y: 10 }}
               transition={{ duration: 0.3 }}
             >
-              <TinaMarkdown content={item.answer} />
+              <TinaMarkdown content={item?.answer} />
             </motion.div>
           </motion.div>
         )}
@@ -151,9 +145,9 @@ export const FAQ = ({ data }: FAQProps) => {
           )}
 
           <div className="space-y-4">
-            {data.items?.map((item, index) => (
+            {data.items?.filter((item): item is NonNullable<typeof item> => item !== null).map((item, index) => (
               <div key={index}>
-                <FAQItem item={item} index={index} />
+                <FAQItem item={item} />
               </div>
             ))}
           </div>

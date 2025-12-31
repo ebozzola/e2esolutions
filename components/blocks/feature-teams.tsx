@@ -25,6 +25,15 @@ const TeamMemberModal = ({
 }) => {
   const [isClosing, setIsClosing] = useState(false);
 
+  const handleClose = () => {
+    setIsClosing(true);
+    // Add a small delay before actually closing the modal to allow for exit animation
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 200);
+  };
+
   // Handle ESC key press to close modal
   useEffect(() => {
     const handleEscKey = (e: KeyboardEvent) => {
@@ -44,16 +53,8 @@ const TeamMemberModal = ({
       // Restore scrolling when modal is closed
       document.body.style.overflow = "";
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
-
-  const handleClose = () => {
-    setIsClosing(true);
-    // Add a small delay before actually closing the modal to allow for exit animation
-    setTimeout(() => {
-      setIsClosing(false);
-      onClose();
-    }, 200);
-  };
 
   if (!isOpen) return null;
 
@@ -174,11 +175,10 @@ const TeamMemberModal = ({
 export const FeatureTeamItem = ({
   featuresColor,
   data,
-  index,
 }: {
   featuresColor: string;
   data: PageBlocksFeatureTeamsItems;
-  index: number;
+  index?: number;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);

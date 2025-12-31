@@ -18,20 +18,21 @@ export default async function Page({
     redirect("/admin/index.html");
   }
 
+  let data;
   try {
-    const data = await client.queries.page({
+    data = await client.queries.page({
       relativePath: `${filename.join("/")}.mdx`,
     });
-
-    return (
-      <Layout rawPageData={data}>
-        <ClientPage {...data} />
-      </Layout>
-    );
-  } catch (error) {
+  } catch {
     // If the page doesn't exist, show 404
     notFound();
   }
+
+  return (
+    <Layout rawPageData={data}>
+      <ClientPage {...data} />
+    </Layout>
+  );
 }
 
 export async function generateStaticParams() {

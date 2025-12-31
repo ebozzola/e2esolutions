@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Ignore generated admin assets
+    "public/admin/**",
+    "tina/__generated__/**",
+    // Ignore tina config files (less strict typing)
+    "tina/collection/**",
+    "tina/fields/**",
   ]),
 ]);
 

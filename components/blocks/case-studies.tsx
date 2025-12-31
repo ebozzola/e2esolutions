@@ -3,7 +3,7 @@ import { Container } from "../layout/container";
 import { Section } from "../layout/section";
 import { tinaField } from "tinacms/dist/react";
 import type { Template } from "tinacms";
-import type { PageBlocksCaseStudies, PageBlocksCaseStudiesStudies } from "@/tina/__generated__/types";
+import type { PageBlocksCaseStudiesStudies, PageBlocksCaseStudies } from "@/tina/__generated__/types";
 
 export const caseStudiesBlockSchema: Template = {
   name: "caseStudies",
@@ -99,9 +99,9 @@ export const caseStudiesBlockSchema: Template = {
   ],
 };
 
-export const CaseStudies = ({ data }: { data: any }) => {
+export const CaseStudies = ({ data }: { data: PageBlocksCaseStudies }) => {
   return (
-    <Section color={data.color} className="py-8 md:py-16">
+    <Section color={data.color ?? undefined} className="py-8 md:py-16">
       <Container>
         <div className="max-w-4xl mx-auto text-center">
           {data.headline && (
@@ -128,7 +128,7 @@ export const CaseStudies = ({ data }: { data: any }) => {
               <div
                 key={index}
                 className="p-6 rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow duration-200"
-                data-tina-field={tinaField(data.studies, index)}
+                data-tina-field={tinaField(study)}
               >
                 <div className="text-sm font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
                   {study.industry}
