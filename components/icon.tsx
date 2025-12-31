@@ -5,7 +5,7 @@ import { useLayout } from "./layout/layout-context";
 import Image from "next/image";
 
 export const IconOptions = {
-  E2ELogo: (props) => (
+  E2ELogo: (props: { className?: string }) => (
     <Image
       src="/logo-notext.svg"
       alt="E2E Solutions Logo"
@@ -15,7 +15,7 @@ export const IconOptions = {
       priority
     />
   ),
-  E2ELogoText: (props) => (
+  E2ELogoText: (props: { className?: string }) => (
     <Image
       src="/logo.svg"
       alt="E2E Solutions Logo"
@@ -78,50 +78,64 @@ const iconSizeClass = {
   custom: "",
 };
 
+interface IconData {
+  name?: string;
+  color?: string;
+  size?: string;
+  style?: string;
+}
+
 export const Icon = ({
   data,
   parentColor = "",
   className = "",
   tinaField = "",
+}: {
+  data: IconData;
+  parentColor?: string;
+  className?: string;
+  tinaField?: string;
 }) => {
   const { theme } = useLayout();
 
-  if (IconOptions[data.name] === null || IconOptions[data.name] === undefined) {
+  const iconOptionsTyped = IconOptions as Record<string, React.ComponentType<{ className?: string }>>;
+
+  if (!data.name || iconOptionsTyped[data.name] === null || iconOptionsTyped[data.name] === undefined) {
     return null;
   }
 
   const { name, color, size = "medium", style = "regular" } = data;
 
-  const IconSVG = IconOptions[name];
+  const IconSVG = iconOptionsTyped[name];
 
   const iconSizeClasses =
     typeof size === "string"
-      ? iconSizeClass[size]
-      : iconSizeClass[Object.keys(iconSizeClass)[size]];
+      ? iconSizeClass[size as keyof typeof iconSizeClass]
+      : iconSizeClass[Object.keys(iconSizeClass)[Number(size)] as keyof typeof iconSizeClass];
 
   const iconColor = color
     ? color === "primary"
-      ? theme.color
+      ? theme?.color
       : color
-    : theme.color;
+    : theme?.color;
 
   if (style == "circle") {
+    const colorKey = iconColor || "blue";
     return (
       <div
         data-tina-field={tinaField}
-        className={`relative z-10 inline-flex items-center justify-center flex-shrink-0 ${iconSizeClasses} rounded-full ${iconColorClass[iconColor].circle} ${className}`}
+        className={`relative z-10 inline-flex items-center justify-center flex-shrink-0 ${iconSizeClasses} rounded-full ${iconColorClass[colorKey]?.circle || iconColorClass.blue.circle} ${className}`}
       >
         <IconSVG className="w-2/3 h-2/3" />
       </div>
     );
   } else {
-    const iconColorClasses =
-      iconColorClass[
-        parentColor === "primary" &&
-        (iconColor === theme.color || iconColor === "primary")
-          ? "white"
-          : iconColor
-      ].regular;
+    const colorKey =
+      parentColor === "primary" &&
+      (iconColor === theme?.color || iconColor === "primary")
+        ? "white"
+        : iconColor || "blue";
+    const iconColorClasses = iconColorClass[colorKey]?.regular || iconColorClass.blue.regular;
     return (
       <IconSVG
         data-tina-field={tinaField}

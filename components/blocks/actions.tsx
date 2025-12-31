@@ -61,6 +61,7 @@ export const Actions = ({
   actions: PageBlocksHeroActions[];
 }) => {
   const { theme } = useLayout();
+  const themeColor = (theme?.color || "blue") as keyof typeof buttonColorClasses;
   return (
     <div className={`flex flex-wrap items-center gap-y-4 gap-x-6 ${className}`}>
       {actions &&
@@ -73,8 +74,8 @@ export const Actions = ({
                   data-tina-field={tinaField(action)}
                   className={`z-10 relative flex items-center px-7 py-3 font-semibold text-lg transition duration-150 ease-out  rounded-lg transform focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 whitespace-nowrap ${
                     parentColor === "primary"
-                      ? invertedButtonColorClasses[theme.color]
-                      : buttonColorClasses[theme.color]
+                      ? invertedButtonColorClasses[themeColor]
+                      : buttonColorClasses[themeColor]
                   }`}
                 >
                   {action.label}
@@ -96,7 +97,7 @@ export const Actions = ({
                 className={`group inline-flex items-center font-semibold text-lg transition duration-150 ease-out ${
                   parentColor === "primary"
                     ? `text-white  hover:text-gray-50`
-                    : linkButtonColorClasses[theme.color]
+                    : linkButtonColorClasses[themeColor]
                 }`}
                 style={{
                   textShadow: `0 3px 7px rgba(var(--color-rgb-blue-400),0.2)`,

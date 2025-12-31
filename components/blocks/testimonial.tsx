@@ -8,8 +8,8 @@ import { Container } from "../layout/container";
 export const Testimonial = ({ data }: { data: PageBlocksTestimonial }) => {
   return (
     <Section
-      color={data.color}
-      className="relative overflow-hidden py-16 md:py-24"
+      color={data.color ?? undefined}
+      className="relative overflow-hidden py-8 md:py-16"
     >
       {/* Modern Background - Consistent with Hero Section */}
       <div className="absolute inset-0 z-0">

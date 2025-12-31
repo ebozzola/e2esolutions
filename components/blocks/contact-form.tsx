@@ -3,15 +3,11 @@ import { Container } from "../layout/container";
 import { Section } from "../layout/section";
 import { tinaField } from "tinacms/dist/react";
 import type { Template } from "tinacms";
+import { PageBlocksContactForm } from "../../tina/__generated__/types";
 
 // Define the interface for the contact form block
 interface ContactFormProps {
-  data: {
-    heading?: string;
-    subheading?: string;
-    formId?: string;
-    color?: string;
-  };
+  data: PageBlocksContactForm;
 }
 
 export const contactFormBlockSchema: Template = {
@@ -136,10 +132,10 @@ export const ContactForm = ({ data }: ContactFormProps) => {
   };
 
   return (
-    <Section color={data.color || "default"}>
+    <Section color={data.color || "default"} className="py-8 md:py-16">
       <Container
-        size="large"
-        className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-8"
+        size="custom"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-8 max-w-7xl mx-auto"
       >
         <div className="prose prose-lg">
           {data.heading && (

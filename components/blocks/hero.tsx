@@ -27,8 +27,8 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
 
   return (
     <Section
-      color={data.color}
-      className="hero-section min-h-[90vh] flex items-center relative overflow-hidden"
+      color={data.color ?? undefined}
+      className="hero-section md:min-h-[85vh] flex items-start md:items-center relative overflow-hidden"
     >
       {/* Modern Dynamic Background */}
       <div className="absolute inset-0 z-0">
@@ -76,7 +76,7 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
       <Container
         size="large"
         width="custom"
-        className="hero-content grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center justify-center py-12 md:py-20 relative z-10 max-w-8xl mx-auto"
+        className="hero-content grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center justify-center py-8 md:py-16 relative z-10 max-w-8xl mx-auto"
       >
         <div className="row-start-2 md:row-start-1 md:col-span-6 text-center md:text-left">
           {data.tagline && (
@@ -133,8 +133,8 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
                 <div className="mt-8">
                   <Actions
                     className="justify-center md:justify-start py-2 gap-4"
-                    parentColor={data.color}
-                    actions={data.actions}
+                    parentColor={data.color ?? "default"}
+                    actions={data.actions.filter((a): a is NonNullable<typeof a> => a !== null)}
                   />
                 </div>
               )}
@@ -150,8 +150,9 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
               <TinaMarkdown
                 content={data.text2}
                 components={{
-                  mermaid: ({ value }) => {
-                    return <MermaidElement value={value} />;
+                  mermaid: (props: { value: string } | undefined) => {
+                    if (!props) return null;
+                    return <MermaidElement value={props.value} />;
                   },
                 }}
               />
@@ -169,16 +170,19 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
               <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
 
               <div className="relative rounded-2xl overflow-hidden">
-                <Image
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                  alt={data.image.alt || "Hero image"}
-                  src={data.image.src}
-                  width={2400}
-                  height={2400}
-                  priority
-                />
+                {data.image.src && (
+                  <Image
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                    alt={data.image.alt || "Hero image"}
+                    src={data.image.src}
+                    width={2400}
+                    height={2400}
+                    priority
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent"></div>
               </div>
+
 
               {/* Decorative corner accents */}
               <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none">

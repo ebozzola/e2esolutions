@@ -11,20 +11,21 @@ import MermaidElement from "../mermaid-renderer";
 
 export const Content = ({ data }: { data: PageBlocksContent }) => {
   return (
-    <Section color={data.color}>
+    <Section color={data.color ?? undefined} className="py-8 md:py-16">
       <Container
         className={`prose prose-lg ${
           data.color === "primary" ? `prose-primary` : `dark:prose-dark`
         }`}
         data-tina-field={tinaField(data, "body")}
-        size="large"
+        size="custom"
         width="medium"
       >
-        <TinaMarkdown 
+        <TinaMarkdown
           content={data.body}
           components={{
-            mermaid({ value }) {
-              return <MermaidElement value={value} />;
+            mermaid: (props: { value: string } | undefined) => {
+              if (!props) return null;
+              return <MermaidElement value={props.value} />;
             }
           }}
         />

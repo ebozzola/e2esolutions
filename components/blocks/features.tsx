@@ -64,9 +64,9 @@ export const Feature = ({
           <Icon
             parentColor={featuresColor}
             data={{
-              name: data.icon.name,
-              color: data.icon.color || "",
-              style: data.icon.style || "regular",
+              name: data.icon.name ?? undefined,
+              color: data.icon.color ?? "",
+              style: data.icon.style ?? "regular",
             }}
             className={`w-8 h-8 relative z-10 text-white transition-transform duration-300 ${
               isHovered ? "scale-110" : "scale-100"
@@ -113,7 +113,7 @@ export const Feature = ({
 
 export const Features = ({ data }: { data: PageBlocksFeatures }) => {
   return (
-    <Section color={data.color} className="relative overflow-hidden">
+    <Section color={data.color ?? undefined} className="relative overflow-hidden">
       {/* Modern Background - Consistent with Hero Section */}
       <div className="absolute inset-0 z-0">
         {data.color === "primary" ? (
@@ -156,7 +156,7 @@ export const Features = ({ data }: { data: PageBlocksFeatures }) => {
       </div>
 
       <Container
-        className={`flex flex-wrap gap-6 text-left py-12 md:py-16 relative z-10 mx-auto w-full`}
+        className={`flex flex-wrap gap-6 text-left py-8 md:py-16 relative z-10 mx-auto w-full`}
         size="large"
       >
         {/* Features grid */}
@@ -210,7 +210,7 @@ export const featureBlockSchema = {
       name: "items",
       list: true,
       ui: {
-        itemProps: (item) => {
+        itemProps: (item: { title?: string }) => {
           return {
             label: item?.title,
           };

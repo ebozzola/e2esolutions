@@ -18,6 +18,8 @@ export default function Footer() {
   const { theme, globalSettings } = useLayout();
   const footer = globalSettings?.footer;
 
+  if (!footer || !theme) return null;
+
   const socialIconClasses = "h-5 w-auto transition-colors duration-200";
   const socialIconColorClasses = {
     blue: "text-blue-500 dark:text-blue-400 hover:text-blue-300",
@@ -47,8 +49,8 @@ export default function Footer() {
   };
 
   const footerColorCss =
-    theme?.darkMode === "primary"
-      ? footerColor.primary[theme.color]
+    theme.darkMode === "primary"
+      ? footerColor.primary[theme.color as keyof typeof footerColor.primary]
       : footerColor.default;
 
   return (
@@ -59,14 +61,14 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="inline-flex items-center gap-3">
               <Icon
-                parentColor={footer.color}
+                parentColor={footer.color ?? undefined}
                 data={{
                   name: "E2ELogo",
                   color:
                     theme.color === "primary"
                       ? "primary"
-                      : globalSettings?.header.icon.color,
-                  style: globalSettings?.header.icon.style,
+                      : globalSettings?.header?.icon?.color ?? undefined,
+                  style: globalSettings?.header?.icon?.style ?? undefined,
                   size: "medium",
                 }}
               />
@@ -89,7 +91,7 @@ export default function Footer() {
                   <FaFacebookF
                     className={`${socialIconClasses} ${
                       socialIconColorClasses[
-                        footer.color === "primary" ? "primary" : theme.color
+                        (footer.color === "primary" ? "primary" : theme.color) as keyof typeof socialIconColorClasses
                       ]
                     }`}
                   />
@@ -104,7 +106,7 @@ export default function Footer() {
                   <FaXTwitter
                     className={`${socialIconClasses} ${
                       socialIconColorClasses[
-                        footer.color === "primary" ? "primary" : theme.color
+                        (footer.color === "primary" ? "primary" : theme.color) as keyof typeof socialIconColorClasses
                       ]
                     }`}
                   />
@@ -119,7 +121,7 @@ export default function Footer() {
                   <AiFillInstagram
                     className={`${socialIconClasses} ${
                       socialIconColorClasses[
-                        footer.color === "primary" ? "primary" : theme.color
+                        (footer.color === "primary" ? "primary" : theme.color) as keyof typeof socialIconColorClasses
                       ]
                     }`}
                   />
@@ -134,7 +136,7 @@ export default function Footer() {
                   <FaLinkedin
                     className={`${socialIconClasses} ${
                       socialIconColorClasses[
-                        footer.color === "primary" ? "primary" : theme.color
+                        (footer.color === "primary" ? "primary" : theme.color) as keyof typeof socialIconColorClasses
                       ]
                     }`}
                   />
@@ -149,7 +151,7 @@ export default function Footer() {
                   <FaGithub
                     className={`${socialIconClasses} ${
                       socialIconColorClasses[
-                        footer.color === "primary" ? "primary" : theme.color
+                        (footer.color === "primary" ? "primary" : theme.color) as keyof typeof socialIconColorClasses
                       ]
                     }`}
                   />
@@ -164,7 +166,7 @@ export default function Footer() {
                   <FaYoutube
                     className={`${socialIconClasses} ${
                       socialIconColorClasses[
-                        footer.color === "primary" ? "primary" : theme.color
+                        (footer.color === "primary" ? "primary" : theme.color) as keyof typeof socialIconColorClasses
                       ]
                     }`}
                   />

@@ -9,7 +9,7 @@ import "@/styles.css";
 
 const fontSans = FontSans({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
 });
 
 const nunito = Nunito({
@@ -122,16 +122,15 @@ export default async function RootLayout({
         return `font-lato ${lato.variable}`;
       case "sans":
       default:
-        return `font-sans ${fontSans.variable} `;
+        return `font-sans ${fontSans.variable}`;
     }
   };
-  const fontVariable = selectFont(global.theme.font);
+  const fontVariable = selectFont(global.theme?.font || "sans");
 
   return (
     <html lang="en">
       <head>
         {/* these are also defined in next.config.js but github pages doesn't support response headers */}
-        {/* if you aren't deploying to github pages, feel free to delete these tags */}
         <meta name="X-Frame-Options" content="SAMEORIGIN" />
         <meta name="Content-Security-Policy" content="frame-ancestors 'self'" />
       </head>

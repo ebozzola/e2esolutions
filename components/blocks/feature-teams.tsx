@@ -76,7 +76,7 @@ const TeamMemberModal = ({
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-20 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm"
           aria-label="Close modal"
         >
           <svg
@@ -95,7 +95,23 @@ const TeamMemberModal = ({
           </svg>
         </button>
 
-        <div className="p-6 md:p-8">
+        <div className="p-6 md:p-8 pt-14 md:pt-8">
+          {/* Mobile: Image centered at top, Desktop: Image on right */}
+          {data.image?.src && (
+            <div className="flex justify-center mb-6 md:hidden">
+              <div className="relative">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-full blur opacity-30"></div>
+                <Image
+                  src={data.image.src}
+                  alt={data.image.alt || "Profile picture"}
+                  width={140}
+                  height={140}
+                  className="relative rounded-full shadow-lg border-2 border-white w-32 h-32"
+                />
+              </div>
+            </div>
+          )}
+
           <div className="flex items-start gap-4 mb-6">
             {data.icon && (
               <div
@@ -112,9 +128,9 @@ const TeamMemberModal = ({
                 <Icon
                   parentColor={featuresColor}
                   data={{
-                    name: data.icon.name,
-                    color: data.icon.color || "",
-                    style: data.icon.style || "regular",
+                    name: data.icon.name ?? undefined,
+                    color: data.icon.color ?? "",
+                    style: data.icon.style ?? "regular",
                   }}
                   className="w-8 h-8 relative z-10 text-white"
                 />
@@ -126,8 +142,9 @@ const TeamMemberModal = ({
                 <h2 className="text-2xl font-bold mb-1">{data.title}</h2>
               )}
 
+              {/* Desktop only: Image on right side */}
               {data.image?.src && (
-                <div className="absolute top-6 right-8 z-10">
+                <div className="hidden md:block absolute top-6 right-16 z-10">
                   <div className="relative">
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-600 rounded-full blur opacity-30"></div>
                     <Image
@@ -219,9 +236,9 @@ export const FeatureTeamItem = ({
             <Icon
               parentColor={featuresColor}
               data={{
-                name: data.icon.name,
-                color: data.icon.color || "",
-                style: data.icon.style || "regular",
+                name: data.icon.name ?? undefined,
+                color: data.icon.color ?? "",
+                style: data.icon.style ?? "regular",
               }}
               className={`w-8 h-8 relative z-10 text-white transition-transform duration-300 ${
                 isHovered ? "scale-110" : "scale-100"
@@ -303,7 +320,7 @@ export const FeatureTeamItem = ({
 
 export const FeatureTeams = ({ data }: { data: PageBlocksFeatureTeams }) => {
   return (
-    <Section color={data.color} className="relative overflow-hidden">
+    <Section color={data.color ?? undefined} className="relative overflow-hidden">
       {/* Modern Background - Consistent with Hero Section */}
       <div className="absolute inset-0 z-0">
         {data.color === "primary" ? (
@@ -346,7 +363,7 @@ export const FeatureTeams = ({ data }: { data: PageBlocksFeatureTeams }) => {
       </div>
 
       <Container
-        className={`flex flex-wrap gap-6 text-left py-12 md:py-16 relative z-10 mx-auto w-full`}
+        className={`flex flex-wrap gap-6 text-left py-8 md:py-16 relative z-10 mx-auto w-full`}
         size="large"
       >
         {/* Features grid */}
@@ -400,7 +417,7 @@ export const featureTeamsBlockSchema = {
       name: "items",
       list: true,
       ui: {
-        itemProps: (item) => {
+        itemProps: (item: { title?: string }) => {
           return {
             label: item?.title,
           };

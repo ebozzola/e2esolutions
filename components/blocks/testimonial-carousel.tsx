@@ -6,26 +6,23 @@ import { Section } from "../layout/section";
 import { Container } from "../layout/container";
 import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import { PageBlocksTestimonialCarousel } from "../../tina/__generated__/types";
 
 // Define the types for our testimonial items
 interface TestimonialItemType {
-  quote?: string;
-  author?: string;
-  role?: string;
-  company?: string;
+  quote?: string | null;
+  author?: string | null;
+  role?: string | null;
+  company?: string | null;
   image?: {
-    src?: string;
-    alt?: string;
-  };
+    src?: string | null;
+    alt?: string | null;
+  } | null;
+  [key: string]: unknown;
 }
 
 interface TestimonialCarouselProps {
-  data: {
-    title?: string;
-    subtitle?: string;
-    testimonials?: TestimonialItemType[];
-    color?: string;
-  };
+  data: PageBlocksTestimonialCarousel;
 }
 
 const TestimonialItem = ({ item }: { item: TestimonialItemType }) => {
@@ -95,22 +92,23 @@ const TestimonialItem = ({ item }: { item: TestimonialItemType }) => {
 };
 
 export const TestimonialCarousel = ({ data }: TestimonialCarouselProps) => {
-  if (!data.testimonials || data.testimonials.length === 0) {
+  const testimonials = data.testimonials?.filter((t): t is NonNullable<typeof t> => t !== null);
+  if (!testimonials || testimonials.length === 0) {
     return null;
   }
 
   // Create a duplicated array for continuous scrolling effect
   // We need to duplicate the items to create the continuous scrolling illusion
   const duplicatedTestimonials = [
-    ...data.testimonials,
-    ...data.testimonials,
-    ...data.testimonials,
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
   ];
 
   return (
     <Section
-      color={data.color}
-      className="relative overflow-hidden py-16 md:py-24"
+      color={data.color ?? undefined}
+      className="relative overflow-hidden py-8 md:py-16"
     >
       {/* Modern Background */}
       <div className="absolute inset-0 z-0">

@@ -1,7 +1,13 @@
 import React from "react";
 import { useLayout } from "../layout/layout-context";
 
-export const Section = ({ children, color = "", className = "" }) => {
+interface SectionProps {
+  children: React.ReactNode;
+  color?: string;
+  className?: string;
+}
+
+export const Section = ({ children, color = "", className = "" }: SectionProps) => {
   const { theme } = useLayout();
   const sectionColor = {
     default:
@@ -22,12 +28,20 @@ export const Section = ({ children, color = "", className = "" }) => {
         "text-white bg-yellow-500 bg-gradient-to-br from-yellow-500 to-yellow-600",
     },
   };
-  const sectionColorCss =
-    color === "primary"
-      ? sectionColor.primary[theme.color]
-      : sectionColor[color]
-      ? sectionColor[color]
-      : sectionColor.default;
+  const getSectionColorCss = () => {
+    if (color === "primary") {
+      return sectionColor.primary[theme?.color as keyof typeof sectionColor.primary] || sectionColor.default;
+    }
+    if (color === "tint") {
+      return sectionColor.tint;
+    }
+    if (color === "default" || !color) {
+      return sectionColor.default;
+    }
+    return sectionColor.default;
+  };
+
+  const sectionColorCss = getSectionColorCss();
 
   return (
     <section

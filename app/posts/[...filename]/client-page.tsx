@@ -10,7 +10,7 @@ import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
 import { components } from "@/components/mdx-components";
 
-const titleColorClasses = {
+const titleColorClasses: Record<string, string> = {
   blue: "from-blue-400 to-blue-600 dark:from-blue-300 dark:to-blue-500",
   teal: "from-teal-400 to-teal-600 dark:from-teal-300 dark:to-teal-500",
   green: "from-green-400 to-green-600",
@@ -37,7 +37,7 @@ export default function PostClientPage(props: ClientPostProps) {
   const { data } = useTina({ ...props });
   const post = data.post;
 
-  const date = new Date(post.date);
+  const date = new Date(post.date || "");
   let formattedDate = "";
   if (!isNaN(date.getTime())) {
     formattedDate = format(date, "MMM dd, yyyy");
@@ -52,7 +52,7 @@ export default function PostClientPage(props: ClientPostProps) {
         >
           <span
             className={`bg-clip-text text-transparent bg-gradient-to-r ${
-              titleColorClasses[theme.color]
+              titleColorClasses[theme?.color || "blue"]
             }`}
           >
             {post.title}
@@ -65,14 +65,16 @@ export default function PostClientPage(props: ClientPostProps) {
           {post.author && (
             <>
               <div className="flex-shrink-0 mr-4">
-                <Image
-                  data-tina-field={tinaField(post.author, "avatar")}
-                  className="h-14 w-14 object-cover rounded-full shadow-sm"
-                  src={post.author.avatar}
-                  alt={post.author.name}
-                  width={500}
-                  height={500}
-                />
+                {post.author.avatar && (
+                  <Image
+                    data-tina-field={tinaField(post.author, "avatar")}
+                    className="h-14 w-14 object-cover rounded-full shadow-sm"
+                    src={post.author.avatar}
+                    alt={post.author.name || ""}
+                    width={500}
+                    height={500}
+                  />
+                )}
               </div>
               <p
                 data-tina-field={tinaField(post.author, "name")}
@@ -101,7 +103,7 @@ export default function PostClientPage(props: ClientPostProps) {
           >
             <Image
               src={post.heroImg}
-              alt={post.title}
+              alt={post.title || ""}
               className="absolute block mx-auto rounded-lg w-full h-auto blur-2xl brightness-150 contrast-[0.9] dark:brightness-150 saturate-200 opacity-50 dark:opacity-30 mix-blend-multiply dark:mix-blend-hard-light"
               aria-hidden="true"
               width={500}
@@ -110,7 +112,7 @@ export default function PostClientPage(props: ClientPostProps) {
             />
             <Image
               src={post.heroImg}
-              alt={post.title}
+              alt={post.title || ""}
               width={500}
               height={500}
               className="relative z-10 mb-14 mx-auto block rounded-lg w-full h-auto opacity-100"

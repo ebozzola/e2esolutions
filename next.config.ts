@@ -1,4 +1,6 @@
-module.exports = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -13,6 +15,16 @@ module.exports = {
       },
     ],
   },
+  // Turbopack configuration for Next.js 16
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+  },
+  // Keep webpack config for production builds
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
@@ -23,7 +35,6 @@ module.exports = {
     return config;
   },
   async headers() {
-    // these are also defined in the root layout since github pages doesn't support headers
     const headers = [
       {
         key: "X-Frame-Options",
@@ -50,3 +61,5 @@ module.exports = {
     ];
   },
 };
+
+export default nextConfig;

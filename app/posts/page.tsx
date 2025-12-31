@@ -15,12 +15,12 @@ export default async function PostsPage() {
         sort: "date",
         after: posts.data.postConnection.pageInfo.endCursor,
       });
-      allPosts.data.postConnection.edges.push(
-        ...posts.data.postConnection.edges
+      allPosts.data.postConnection.edges?.push(
+        ...(posts.data.postConnection.edges || [])
       );
     }
 
-    allPosts.data.postConnection.edges.reverse();
+    allPosts.data.postConnection.edges?.reverse();
 
     return (
       <Layout rawPageData={allPosts.data}>

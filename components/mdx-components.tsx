@@ -27,7 +27,10 @@ export const components: Components<{
   };
   video: PageBlocksVideo;
 }> = {
-  code_block: (props) => <Prism {...props} />,
+  code_block: (props: { lang?: string; value: string } | undefined) => {
+    if (!props) return null;
+    return <Prism {...props} />;
+  },
   BlockQuote: (props: {
     children: TinaMarkdownContent;
     authorName: string;
@@ -38,8 +41,9 @@ export const components: Components<{
           <TinaMarkdown 
             content={props.children}
             components={{
-              mermaid({ value }) {
-                return <MermaidElement value={value} />;
+              mermaid: (props: { value: string } | undefined) => {
+                if (!props) return null;
+                return <MermaidElement value={props.value} />;
               }
             }}
           />
@@ -72,8 +76,9 @@ export const components: Components<{
             <TinaMarkdown 
               content={props.children}
               components={{
-                mermaid({ value }) {
-                  return <MermaidElement value={value} />;
+                mermaid: (props: { value: string } | undefined) => {
+                  if (!props) return null;
+                  return <MermaidElement value={props.value} />;
                 }
               }}
             />
@@ -106,8 +111,9 @@ export const components: Components<{
                   <TinaMarkdown 
                     content={props.disclaimer}
                     components={{
-                      mermaid({ value }) {
-                        return <MermaidElement value={value} />;
+                      mermaid: (props: { value: string } | undefined) => {
+                        if (!props) return null;
+                        return <MermaidElement value={props.value} />;
                       }
                     }}
                   />}
@@ -117,13 +123,17 @@ export const components: Components<{
       </div>
     );
   },
-  img: (props) => (
-    <span className="flex items-center justify-center">
-      <Image src={props.url} alt={props.alt} width={500} height={500} />
-    </span>
-  ),
-  mermaid({ value }) {
-    return <MermaidElement value={value} />;
+  img: (props: { url: string; alt?: string } | undefined) => {
+    if (!props) return null;
+    return (
+      <span className="flex items-center justify-center">
+        <Image src={props.url} alt={props.alt || ""} width={500} height={500} />
+      </span>
+    );
+  },
+  mermaid: (props: { value: string } | undefined) => {
+    if (!props) return null;
+    return <MermaidElement value={props.value} />;
   },
   video: (props) => {
     return <Video data={props} />;

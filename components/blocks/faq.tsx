@@ -19,7 +19,7 @@ interface FAQProps {
 }
 
 // Individual FAQ Item component
-const FAQItem = ({ item, index }: { item: FAQItemType; index: number }) => {
+const FAQItem = ({ item, index }: { item: any; index: number }) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -102,8 +102,8 @@ const FAQItem = ({ item, index }: { item: FAQItemType; index: number }) => {
 export const FAQ = ({ data }: FAQProps) => {
   return (
     <Section
-      color={data.color}
-      className="relative overflow-hidden py-16 md:py-24"
+      color={data.color ?? undefined}
+      className="relative overflow-hidden py-8 md:py-16"
     >
       {/* Modern Background - Consistent with other sections */}
       <div className="absolute inset-0 z-0">

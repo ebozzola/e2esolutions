@@ -6,10 +6,11 @@ import PostClientPage from "./client-page";
 export default async function PostPage({
   params,
 }: {
-  params: { filename: string[] };
+  params: Promise<{ filename: string[] }>;
 }) {
+  const { filename } = await params;
   const data = await client.queries.post({
-    relativePath: `${params.filename.join("/")}.mdx`,
+    relativePath: `${filename.join("/")}.mdx`,
   });
 
   return (
@@ -27,12 +28,12 @@ export async function generateStaticParams() {
     posts = await client.queries.postConnection({
       after: posts.data.postConnection.pageInfo.endCursor,
     });
-    allPosts.data.postConnection.edges.push(...posts.data.postConnection.edges);
+    allPosts.data.postConnection.edges?.push(...(posts.data.postConnection.edges || []));
   }
 
   const params =
-    allPosts.data?.postConnection.edges.map((edge) => ({
-      filename: edge.node._sys.breadcrumbs,
+    allPosts.data?.postConnection.edges?.map((edge) => ({
+      filename: edge?.node?._sys.breadcrumbs,
     })) || [];
 
   return params;

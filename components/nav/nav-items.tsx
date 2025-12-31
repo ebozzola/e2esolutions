@@ -41,7 +41,13 @@ const activeBackgroundClasses = {
   yellow: "text-yellow-500",
 };
 
-export default function NavItems({ navs }: { navs: any }) {
+interface NavItem {
+  href: string;
+  label: string;
+  [key: string]: unknown;
+}
+
+export default function NavItems({ navs }: { navs: NavItem[] | null | undefined }) {
   const currentPath = usePathname();
   const { theme } = useLayout();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -80,7 +86,7 @@ export default function NavItems({ navs }: { navs: any }) {
               style={{ zIndex: 10000 }}
             >
               <ul className="flex flex-col space-y-2">
-                {navs.map((item) => {
+                {navs?.map((item: NavItem) => {
                   const isActive = currentPath === `/${item.href}`;
                   return (
                     <li key={item.href}>
@@ -89,7 +95,7 @@ export default function NavItems({ navs }: { navs: any }) {
                         href={`/${item.href}`}
                         className={`block py-2 px-3 rounded-md text-base transition-all duration-200 ${
                           isActive
-                            ? mobileActiveItemClasses[theme.color]
+                            ? mobileActiveItemClasses[theme?.color as keyof typeof mobileActiveItemClasses]
                             : "hover:bg-gray-100/50 dark:hover:bg-gray-800/50"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
@@ -107,12 +113,12 @@ export default function NavItems({ navs }: { navs: any }) {
 
       {/* Desktop menu */}
       <ul className="hidden md:flex gap-6 sm:gap-8 lg:gap-10 tracking-[.002em] -mx-4">
-        {navs.map((item) => {
+        {navs?.map((item: NavItem) => {
           const isActive = currentPath === `/${item.href}`;
           return (
             <li
               key={item.href}
-              className={isActive ? activeItemClasses[theme.color] : ""}
+              className={isActive ? activeItemClasses[theme?.color as keyof typeof activeItemClasses] : ""}
             >
               <Link
                 data-tina-field={tinaField(item, "label")}
@@ -124,7 +130,7 @@ export default function NavItems({ navs }: { navs: any }) {
                 {item.label}
                 {isActive && (
                   <NavActive
-                    backgroundColor={activeBackgroundClasses[theme.color]}
+                    backgroundColor={activeBackgroundClasses[theme?.color as keyof typeof activeBackgroundClasses]}
                   />
                 )}
               </Link>

@@ -25,11 +25,13 @@ const headerColor = {
 
 export default function Header() {
   const { globalSettings, theme } = useLayout();
-  const header = globalSettings.header;
+  const header = globalSettings?.header;
+
+  if (!header || !theme) return null;
 
   const headerColorCss =
     header.color === "primary"
-      ? headerColor.primary[theme.color]
+      ? headerColor.primary[theme.color as keyof typeof headerColor.primary]
       : headerColor.default;
 
   return (
@@ -52,11 +54,11 @@ export default function Header() {
             >
               <Icon
                 tinaField={tinaField(header, "icon")}
-                parentColor={header.color}
+                parentColor={header.color ?? undefined}
                 data={{
-                  name: header.icon.name,
-                  color: header.icon.color,
-                  style: header.icon.style,
+                  name: header.icon?.name ?? undefined,
+                  color: header.icon?.color ?? undefined,
+                  style: header.icon?.style ?? undefined,
                   size: "medium",
                 }}
               />{" "}
@@ -65,12 +67,12 @@ export default function Header() {
               </span>
             </Link>
           </h4>
-          <NavItems navs={header.nav} />
+          <NavItems navs={header.nav?.filter((n): n is NonNullable<typeof n> & { href: string; label: string } => n !== null && typeof n.href === 'string' && typeof n.label === 'string').map(n => ({ ...n, href: n.href ?? '', label: n.label ?? '' }))} />
         </div>
         <div
           className={cn(
             `absolute h-1 bg-gradient-to-r from-transparent`,
-            theme.darkMode === "primary"
+            theme?.darkMode === "primary"
               ? `via-white/20`
               : `via-primary/20 dark:via-white/20`,
             "to-transparent bottom-0 left-4 right-4 -z-1 opacity-30"
