@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Container } from "../layout/container";
 import { cn } from "../../lib/utils";
@@ -9,49 +9,48 @@ import { Icon } from "../icon";
 import NavItems from "./nav-items";
 import { useLayout } from "../layout/layout-context";
 
-const headerColor = {
-  default: "text-gray-800 dark:text-white backdrop-blur-md",
-  primary: {
-    blue: "text-white backdrop-blur-md",
-    teal: "text-white backdrop-blur-md",
-    green: "text-white backdrop-blur-md",
-    red: "text-white backdrop-blur-md",
-    pink: "text-white backdrop-blur-md",
-    purple: "text-white backdrop-blur-md",
-    orange: "text-white backdrop-blur-md",
-    yellow: "text-white backdrop-blur-md",
-  },
-};
-
 export default function Header() {
   const { globalSettings, theme } = useLayout();
   const header = globalSettings?.header;
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (!header || !theme) return null;
 
-  const headerColorCss =
-    header.color === "primary"
-      ? headerColor.primary[theme.color as keyof typeof headerColor.primary]
-      : headerColor.default;
-
   return (
-    <div
-      className={`sticky top-0 z-50 w-full border-b border-white/10 ${headerColorCss}`}
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out",
+        scrolled
+          ? "py-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl shadow-lg shadow-black/5"
+          : "py-5 bg-transparent"
+      )}
     >
-      {/* Background that matches hero section */}
-      <div className="absolute inset-0 bg-white/5 dark:bg-gray-900/5 z-0">
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-purple-500/5 to-blue-500/5"></div>
-        <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-5"></div>
-      </div>
+      {/* Subtle top accent line */}
+      <div
+        className={cn(
+          "absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent transition-opacity duration-500",
+          scrolled ? "opacity-100" : "opacity-0"
+        )}
+      />
 
-      <Container size="custom" className="py-0 relative z-10 max-w-8xl">
-        <div className="flex items-center justify-between gap-6 relative">
-          <h4 className="select-none text-lg font-bold tracking-tight my-4 transition duration-150 ease-out transform">
-            <Link
-              href="/"
-              className="flex gap-1 items-center whitespace-nowrap tracking-[.002em]"
-            >
+      <Container size="custom" className="max-w-8xl relative">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="group flex items-center gap-3 transition-all duration-300"
+          >
+            <div className="relative">
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 bg-orange-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <Icon
                 tinaField={tinaField(header, "icon")}
                 parentColor={header.color ?? undefined}
@@ -61,24 +60,36 @@ export default function Header() {
                   style: header.icon?.style ?? undefined,
                   size: "medium",
                 }}
-              />{" "}
-              <span data-tina-field={tinaField(header, "name")}>
-                {header.name}
-              </span>
-            </Link>
-          </h4>
-          <NavItems navs={header.nav?.filter((n): n is NonNullable<typeof n> & { href: string; label: string } => n !== null && typeof n.href === 'string' && typeof n.label === 'string').map(n => ({ ...n, href: n.href ?? '', label: n.label ?? '' }))} />
+                className="relative z-10 transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <span
+              data-tina-field={tinaField(header, "name")}
+              className={cn(
+                "text-xl font-semibold tracking-tight transition-colors duration-300",
+                scrolled
+                  ? "text-gray-900 dark:text-white"
+                  : "text-gray-900 dark:text-white"
+              )}
+            >
+              {header.name}
+            </span>
+          </Link>
+
+          {/* Navigation */}
+          <NavItems
+            navs={header.nav
+              ?.filter(
+                (n): n is NonNullable<typeof n> & { href: string; label: string } =>
+                  n !== null &&
+                  typeof n.href === "string" &&
+                  typeof n.label === "string"
+              )
+              .map((n) => ({ ...n, href: n.href ?? "", label: n.label ?? "" }))}
+            scrolled={scrolled}
+          />
         </div>
-        <div
-          className={cn(
-            `absolute h-1 bg-gradient-to-r from-transparent`,
-            theme?.darkMode === "primary"
-              ? `via-white/20`
-              : `via-primary/20 dark:via-white/20`,
-            "to-transparent bottom-0 left-4 right-4 -z-1 opacity-30"
-          )}
-        />
       </Container>
-    </div>
+    </header>
   );
 }

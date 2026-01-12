@@ -1,26 +1,21 @@
 import React from "react";
 import { Metadata } from "next";
-import { Inter as FontSans, Lato, Nunito } from "next/font/google";
+import { DM_Sans, Playfair_Display } from "next/font/google";
 import { cn } from "@/lib/utils";
 import client from "@/tina/__generated__/client";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import "../styles.css";
 
-import "@/styles.css";
-
-const fontSans = FontSans({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
 });
 
-const nunito = Nunito({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-nunito",
-});
-
-const lato = Lato({
-  subsets: ["latin"],
-  variable: "--font-lato",
-  weight: "400",
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -114,21 +109,11 @@ export default async function RootLayout({
   });
   const global = globalQuery.data.global;
 
-  const selectFont = (fontName: string) => {
-    switch (fontName) {
-      case "nunito":
-        return `font-nunito ${nunito.variable}`;
-      case "lato":
-        return `font-lato ${lato.variable}`;
-      case "sans":
-      default:
-        return `font-sans ${fontSans.variable}`;
-    }
-  };
-  const fontVariable = selectFont(global.theme?.font || "sans");
+  // Font selection based on theme
+  const fontVariable = `${dmSans.variable} ${playfair.variable}`;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* these are also defined in next.config.js but github pages doesn't support response headers */}
         <meta name="X-Frame-Options" content="SAMEORIGIN" />
@@ -136,7 +121,11 @@ export default async function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={cn("min-h-screen flex flex-col antialiased", fontVariable)}
+        className={cn(
+          "min-h-screen flex flex-col antialiased font-sans",
+          fontVariable,
+          global.theme?.darkMode === "dark" ? "dark" : ""
+        )}
       >
         {children}
 

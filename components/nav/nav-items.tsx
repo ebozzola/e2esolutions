@@ -2,44 +2,11 @@
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
-import NavActive from "./nav-active";
 import { tinaField } from "tinacms/dist/react";
 import Link from "next/link";
 import { useLayout } from "../layout/layout-context";
 import { IconOptions } from "../icon";
-
-const activeItemClasses = {
-  blue: "text-primary font-medium border-b-2 border-primary",
-  teal: "text-teal-500 font-medium border-b-2 border-teal-500",
-  green: "text-green-500 font-medium border-b-2 border-green-500",
-  red: "text-red-500 font-medium border-b-2 border-red-500",
-  pink: "text-pink-500 font-medium border-b-2 border-pink-500",
-  purple: "text-purple-500 font-medium border-b-2 border-purple-500",
-  orange: "text-orange-500 font-medium border-b-2 border-orange-500",
-  yellow: "text-yellow-500 font-medium border-b-2 border-yellow-500",
-};
-
-const mobileActiveItemClasses = {
-  blue: "bg-primary/10 text-primary",
-  teal: "bg-teal-500/10 text-teal-500",
-  green: "bg-green-500/10 text-green-500",
-  red: "bg-red-500/10 text-red-500",
-  pink: "bg-pink-500/10 text-pink-500",
-  purple: "bg-purple-500/10 text-purple-500",
-  orange: "bg-orange-500/10 text-orange-500",
-  yellow: "bg-yellow-500/10 text-yellow-500",
-};
-
-const activeBackgroundClasses = {
-  blue: "text-primary",
-  teal: "text-teal-500",
-  green: "text-green-500",
-  red: "text-red-500",
-  pink: "text-pink-500",
-  purple: "text-purple-500",
-  orange: "text-orange-500",
-  yellow: "text-yellow-500",
-};
+import { cn } from "../../lib/utils";
 
 interface NavItem {
   href: string;
@@ -47,7 +14,13 @@ interface NavItem {
   [key: string]: unknown;
 }
 
-export default function NavItems({ navs }: { navs: NavItem[] | null | undefined }) {
+export default function NavItems({
+  navs,
+  scrolled = false,
+}: {
+  navs: NavItem[] | null | undefined;
+  scrolled?: boolean;
+}) {
   const currentPath = usePathname();
   const { theme } = useLayout();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -61,83 +34,136 @@ export default function NavItems({ navs }: { navs: NavItem[] | null | undefined 
       <div className="md:hidden">
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline-none"
+          className={cn(
+            "relative p-2.5 rounded-lg transition-all duration-300",
+            "hover:bg-gray-100 dark:hover:bg-gray-800",
+            "focus:outline-none focus:ring-2 focus:ring-orange-500/20"
+          )}
           aria-label="Toggle menu"
         >
+          <span className="sr-only">Open menu</span>
           {mobileMenuOpen ? (
-            <BiX className="w-6 h-6" />
+            <BiX className="w-6 h-6 text-gray-700 dark:text-gray-300" />
           ) : (
-            <BiMenu className="w-6 h-6" />
+            <BiMenu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
           )}
         </button>
       </div>
 
-      {/* Mobile menu in portal */}
+      {/* Mobile menu portal */}
       {mobileMenuOpen &&
         typeof window !== "undefined" &&
         createPortal(
           <div className="fixed inset-0" style={{ zIndex: 9999 }}>
+            {/* Backdrop */}
             <div
-              className="fixed inset-0 bg-black/20 backdrop-blur-md"
+              className="fixed inset-0 bg-gray-900/20 backdrop-blur-sm animate-fadeIn"
               onClick={() => setMobileMenuOpen(false)}
             />
+
+            {/* Menu panel */}
             <div
-              className="fixed top-[calc(var(--header-height,4rem))] right-4 w-64 p-4 rounded-lg bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg border border-white/20 dark:border-gray-700/30"
+              className="fixed top-20 right-4 left-4 sm:left-auto sm:w-80 p-2 rounded-2xl bg-white dark:bg-gray-900 shadow-2xl shadow-gray-900/20 border border-gray-200/50 dark:border-gray-700/50 animate-slideInFromBottom"
               style={{ zIndex: 10000 }}
             >
-              <ul className="flex flex-col space-y-2">
-                {navs?.map((item: NavItem) => {
-                  const isActive = currentPath === `/${item.href}`;
-                  return (
-                    <li key={item.href}>
-                      <Link
-                        data-tina-field={tinaField(item, "label")}
-                        href={`/${item.href}`}
-                        className={`block py-2 px-3 rounded-md text-base transition-all duration-200 ${
-                          isActive
-                            ? mobileActiveItemClasses[theme?.color as keyof typeof mobileActiveItemClasses]
-                            : "hover:bg-gray-100/50 dark:hover:bg-gray-800/50"
-                        }`}
-                        onClick={() => setMobileMenuOpen(false)}
+              {/* Accent line */}
+              <div className="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
+
+              <nav className="p-4">
+                <ul className="flex flex-col space-y-1">
+                  {navs?.map((item: NavItem, index: number) => {
+                    const isActive =
+                      currentPath === `/${item.href}` ||
+                      (item.href === "" && currentPath === "/");
+                    return (
+                      <li
+                        key={item.href}
+                        className="animate-slideInFromBottom"
+                        style={{ animationDelay: `${index * 50}ms` }}
                       >
-                        {item.label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+                        <Link
+                          data-tina-field={tinaField(item, "label")}
+                          href={`/${item.href}`}
+                          className={cn(
+                            "group flex items-center gap-3 py-3 px-4 rounded-xl text-base font-medium transition-all duration-300",
+                            isActive
+                              ? "bg-gradient-to-r from-orange-500/10 to-orange-400/5 text-orange-600 dark:text-orange-400"
+                              : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
+                          )}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {/* Active indicator */}
+                          <span
+                            className={cn(
+                              "w-1.5 h-1.5 rounded-full transition-all duration-300",
+                              isActive
+                                ? "bg-orange-500"
+                                : "bg-gray-300 dark:bg-gray-600 group-hover:bg-orange-400"
+                            )}
+                          />
+                          {item.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+
+              {/* CTA Button */}
+              <div className="p-4 pt-2 border-t border-gray-100 dark:border-gray-800">
+                <Link
+                  href="/contact"
+                  className="block w-full py-3 px-4 text-center text-sm font-semibold text-white bg-gradient-to-r from-gray-900 to-gray-800 hover:from-orange-500 hover:to-orange-600 rounded-xl transition-all duration-300 shadow-lg shadow-gray-900/10 hover:shadow-orange-500/20"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Get in Touch
+                </Link>
+              </div>
             </div>
           </div>,
           document.body
         )}
 
-      {/* Desktop menu */}
-      <ul className="hidden md:flex gap-6 sm:gap-8 lg:gap-10 tracking-[.002em] -mx-4">
+      {/* Desktop navigation */}
+      <nav className="hidden md:flex items-center gap-1">
         {navs?.map((item: NavItem) => {
-          const isActive = currentPath === `/${item.href}`;
+          const isActive =
+            currentPath === `/${item.href}` ||
+            (item.href === "" && currentPath === "/");
           return (
-            <li
+            <Link
               key={item.href}
-              className={isActive ? activeItemClasses[theme?.color as keyof typeof activeItemClasses] : ""}
+              data-tina-field={tinaField(item, "label")}
+              href={`/${item.href}`}
+              className={cn(
+                "relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 group",
+                isActive
+                  ? "text-orange-600 dark:text-orange-400"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              )}
             >
-              <Link
-                data-tina-field={tinaField(item, "label")}
-                href={`/${item.href}`}
-                className={`relative select-none text-sm font-medium inline-block tracking-wide transition-all duration-200 ease-out hover:text-primary dark:hover:text-primary py-6 px-4 ${
-                  !isActive ? "text-gray-600 dark:text-gray-300" : ""
-                }`}
-              >
-                {item.label}
-                {isActive && (
-                  <NavActive
-                    backgroundColor={activeBackgroundClasses[theme?.color as keyof typeof activeBackgroundClasses]}
-                  />
+              <span className="relative z-10">{item.label}</span>
+
+              {/* Hover background */}
+              <span
+                className={cn(
+                  "absolute inset-0 rounded-lg transition-all duration-300",
+                  isActive
+                    ? "bg-orange-500/10"
+                    : "bg-transparent group-hover:bg-gray-100 dark:group-hover:bg-gray-800"
                 )}
-              </Link>
-            </li>
+              />
+
+              {/* Active indicator dot */}
+              {isActive && (
+                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-orange-500" />
+              )}
+            </Link>
           );
         })}
-      </ul>
+
+       
+      </nav>
     </>
   );
 }

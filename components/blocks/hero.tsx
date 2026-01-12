@@ -10,130 +10,137 @@ import { Container } from "../layout/container";
 import { Actions } from "./actions";
 import MermaidElement from "../mermaid-renderer";
 import { TypingAnimation } from "../magicui/typing-animation";
-import { IconOptions } from "../icon";
+import { cn } from "../../lib/utils";
 
 export const Hero = ({ data }: { data: PageBlocksHero }) => {
   return (
     <Section
       color={data.color ?? undefined}
-      className="hero-section md:min-h-[85vh] flex items-start md:items-center relative overflow-hidden"
+      className="hero-section min-h-screen flex items-center relative overflow-hidden pt-24"
     >
-      {/* Modern Dynamic Background */}
+      {/* Elegant Background */}
       <div className="absolute inset-0 z-0">
-        {/* Primary gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-purple-500/5 to-blue-500/10"></div>
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-orange-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800" />
 
-        {/* Logo pattern using Icon component */}
-        <div className="absolute inset-0 grid grid-cols-6 gap-12 p-8 opacity-[0.02]">
-          {[...Array(24)].map((_, index) => (
-            <IconOptions.E2ELogo
-              key={index}
-              className="w-full h-full opacity-50 transform rotate-0 hover:rotate-45 transition-transform duration-1000"
-            />
-          ))}
-        </div>
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-40" />
 
-        {/* Animated blob shapes */}
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
+        {/* Accent gradient orbs */}
+        <div className="absolute top-1/4 -right-32 w-[500px] h-[500px] bg-gradient-to-br from-orange-200/40 to-orange-100/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-gradient-to-tr from-gray-200/50 to-gray-100/30 rounded-full blur-3xl" />
 
-      {/* Geometric accent elements */}
-      <div className="hidden md:block absolute inset-0 z-1 pointer-events-none">
-        {/* Top left corner elements */}
-        <div className="absolute top-20 left-10 w-32 h-1 bg-primary/30 rotate-45 transform origin-left"></div>
-        <div className="absolute top-20 left-10 w-1 h-32 bg-primary/30 -rotate-45 transform origin-top"></div>
-
-        {/* Bottom right corner elements */}
-        <div className="absolute bottom-20 right-10 w-32 h-1 bg-primary/30 -rotate-45 transform origin-right"></div>
-        <div className="absolute bottom-20 right-10 w-1 h-32 bg-primary/30 rotate-45 transform origin-bottom"></div>
-
-        {/* Floating accent logos */}
-        <div className="absolute top-1/3 right-1/4 opacity-20 rotate-12 animate-float">
-          <IconOptions.E2ELogo className="w-16 h-16" />
-        </div>
-        <div className="absolute top-1/4 left-1/3 opacity-20 -rotate-12 animate-float animation-delay-2000">
-          <IconOptions.E2ELogo className="w-24 h-24" />
-        </div>
-        <div className="absolute bottom-1/4 right-1/3 opacity-20 rotate-45 animate-float animation-delay-3000">
-          <IconOptions.E2ELogo className="w-20 h-20" />
+        {/* Diagonal accent lines */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[1px] h-[60vh] bg-gradient-to-b from-orange-500/30 via-orange-500/10 to-transparent transform rotate-[20deg] origin-top-right" />
+          <div className="absolute bottom-0 left-1/4 w-[1px] h-[40vh] bg-gradient-to-t from-gray-400/20 via-gray-400/10 to-transparent transform -rotate-[15deg] origin-bottom" />
         </div>
       </div>
+
+      {/* Corner accents */}
+      <div className="hidden lg:block absolute top-32 left-12 corner-accent corner-accent-tl" />
+      <div className="hidden lg:block absolute bottom-12 right-12 corner-accent corner-accent-br" />
 
       <Container
         size="large"
         width="custom"
-        className="hero-content grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center justify-center py-8 md:py-16 relative z-10 max-w-8xl mx-auto"
+        className="hero-content grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center py-12 lg:py-20 relative z-10 max-w-8xl mx-auto"
       >
-        <div className="row-start-2 md:row-start-1 md:col-span-6 text-center md:text-left">
+        {/* Content Column */}
+        <div className="order-2 lg:order-1 text-center lg:text-left">
+          {/* Tagline */}
           {data.tagline && (
-            <h2
+            <div
               data-tina-field={tinaField(data, "tagline")}
-              className="relative inline-block px-4 py-1.5 mb-6 md:mb-8 text-sm md:text-base font-bold tracking-wide title-font rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 text-primary dark:text-white"
+              className="inline-flex items-center gap-2 mb-6 animate-fadeIn"
             >
-              {data.tagline}
-            </h2>
+              <span className="w-8 h-[2px] bg-gradient-to-r from-orange-500 to-orange-300" />
+              <span className="text-sm font-semibold tracking-[0.2em] uppercase text-orange-600 dark:text-orange-400">
+                {data.tagline}
+              </span>
+            </div>
           )}
+
+          {/* Headline */}
           {data.headline && (
-            <h3
+            <h1
               data-tina-field={tinaField(data, "headline")}
-              className="w-full relative mb-6 md:mb-6 text-4xl md:text-6xl font-extrabold tracking-tight leading-tight title-font"
+              className="mb-6 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1] title-font text-gray-900 dark:text-white"
             >
-              <TypingAnimation
-                className={`bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-600 to-purple-500`}
-              >
+              <TypingAnimation className="inline">
                 {data.headline}
               </TypingAnimation>
-            </h3>
+            </h1>
           )}
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex flex-col md:w-full">
-              {data.text && (
-                <div
-                  data-tina-field={tinaField(data, "text")}
-                  className={`prose prose-lg mx-auto md:mx-0 mb-10 ${
-                    data.color === "primary"
-                      ? "prose-primary"
-                      : "dark:prose-dark"
-                  }`}
-                >
-                  {/* Extract a plain text summary for typing animation */}
-                  {data.text.children?.[0]?.children?.[0]?.text && (
-                    <TypingAnimation className="mb-4 text-base font-normal leading-normal tracking-normal">
-                      {data.text.children[0].children[0].text}
-                    </TypingAnimation>
-                  )}
 
-                  {/* using typing animation instead
-                  <TinaMarkdown
-                    content={data.text}
-                    components={{
-                      mermaid: ({ value }) => {
-                        return <MermaidElement value={value} />;
-                      },
-                    }}
-                  />
-                   */}
-                </div>
-              )}
-              {data.actions && (
-                <div className="mt-8">
-                  <Actions
-                    className="justify-center md:justify-start py-2 gap-4"
-                    parentColor={data.color ?? "default"}
-                    actions={data.actions.filter((a): a is NonNullable<typeof a> => a !== null)}
-                  />
-                </div>
+          {/* Description */}
+          {data.text && (
+            <div
+              data-tina-field={tinaField(data, "text")}
+              className="mb-8 text-lg sm:text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mx-auto lg:mx-0"
+            >
+              {data.text.children?.[0]?.children?.[0]?.text && (
+                <p className="animate-slideUp" style={{ animationDelay: "200ms" }}>
+                  {data.text.children[0].children[0].text}
+                </p>
               )}
             </div>
+          )}
+
+          {/* Actions */}
+          {data.actions && (
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slideUp"
+              style={{ animationDelay: "400ms" }}
+            >
+              <Actions
+                className="gap-4"
+                parentColor={data.color ?? "default"}
+                actions={data.actions.filter(
+                  (a): a is NonNullable<typeof a> => a !== null
+                )}
+              />
+            </div>
+          )}
+
+          {/* Stats or trust indicators */}
+          <div
+            className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 animate-slideUp"
+            style={{ animationDelay: "600ms" }}
+          >
+            <div className="flex flex-wrap gap-8 justify-center lg:justify-start">
+              <div className="text-center lg:text-left">
+                <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                  15+
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">
+                  Years Experience
+                </div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                  200+
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">
+                  Projects Delivered
+                </div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                  98%
+                </div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">
+                  Client Satisfaction
+                </div>
+              </div>
+            </div>
           </div>
+
+          {/* Secondary text */}
           {data.text2 && (
             <div
               data-tina-field={tinaField(data, "text2")}
-              className={`prose prose-lg mx-auto md:mx-0 mb-10 ${
-                data.color === "primary" ? "prose-primary" : "dark:prose-dark"
-              }`}
+              className="prose prose-lg dark:prose-dark mt-8"
             >
               <TinaMarkdown
                 content={data.text2}
@@ -148,43 +155,95 @@ export const Hero = ({ data }: { data: PageBlocksHero }) => {
           )}
         </div>
 
+        {/* Image Column */}
         {data.image && (
           <div
             data-tina-field={tinaField(data.image, "src")}
-            className="relative md:col-span-6 flex justify-center"
+            className="order-1 lg:order-2 relative"
           >
-            <div className="relative overflow-hidden rounded-2xl shadow-2xl group w-full">
-              {/* Glow effect behind image */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+            <div className="relative animate-scaleIn">
+              {/* Background shape */}
+              <div className="absolute -inset-4 bg-gradient-to-br from-orange-100 to-orange-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl transform rotate-3 opacity-60" />
 
-              <div className="relative rounded-2xl overflow-hidden">
+              {/* Image container */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/20 group">
                 {data.image.src && (
                   <Image
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto object-cover aspect-[4/3] transition-transform duration-700 ease-out group-hover:scale-105"
                     alt={data.image.alt || "Hero image"}
                     src={data.image.src}
-                    width={2400}
-                    height={2400}
+                    width={800}
+                    height={600}
                     priority
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent"></div>
+
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 via-transparent to-transparent" />
               </div>
 
+              {/* Decorative elements */}
+              <div className="absolute -top-6 -right-6 w-24 h-24 bg-orange-500/10 rounded-full blur-2xl" />
+              <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gray-900/10 rounded-full blur-2xl" />
 
-              {/* Decorative corner accents */}
-              <div className="absolute top-0 left-0 w-16 h-16 pointer-events-none">
-                <div className="absolute top-4 left-0 w-8 h-1 bg-primary/50"></div>
-                <div className="absolute top-0 left-4 w-1 h-8 bg-primary/50"></div>
-              </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 pointer-events-none">
-                <div className="absolute bottom-4 right-0 w-8 h-1 bg-primary/50"></div>
-                <div className="absolute bottom-0 right-4 w-1 h-8 bg-primary/50"></div>
+              {/* Floating badge */}
+              <div className="absolute -bottom-4 -right-4 lg:bottom-8 lg:-right-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4 animate-float">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
+                    <svg
+                      width="24"
+                      height="24"
+                      className="w-6 h-6 text-white flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                      End-to-End Solutions
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      Complete Supply Chain Coverage
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         )}
       </Container>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden lg:block">
+        <div className="flex flex-col items-center gap-2 animate-bounce">
+          <span className="text-xs font-medium text-gray-400 tracking-wider uppercase">
+            Scroll
+          </span>
+          <svg
+            width="20"
+            height="20"
+            className="w-5 h-5 text-gray-400 flex-shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
+          </svg>
+        </div>
+      </div>
     </Section>
   );
 };
