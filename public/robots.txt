@@ -3,6 +3,8 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
+Disallow: /_next/static/
+Disallow: /posts
 
 # Sitemap location
 Sitemap: https://e2esolutions.com.au/sitemap.xml 

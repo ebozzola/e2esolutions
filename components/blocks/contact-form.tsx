@@ -205,7 +205,7 @@ export const ContactForm = ({ data }: ContactFormProps) => {
               </div>
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">Located at</p>
-                <p className="font-semibold text-gray-900 dark:text-white">Global Operations</p>
+                <p className="font-semibold text-gray-900 dark:text-white">Port Melbourne VIC 3207</p>
               </div>
             </div>
           </div>
