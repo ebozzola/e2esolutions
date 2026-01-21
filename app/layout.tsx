@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     email: false,
     telephone: false,
   },
-  metadataBase: new URL("https://e2esolutions.com"),
+  metadataBase: new URL("https://e2esolutions.com.au"),
   alternates: {
     canonical: "/",
   },
@@ -60,9 +60,9 @@ export const metadata: Metadata = {
     title: "E2E Solutions | End-to-End Supply Chain Experts",
     description:
       "Specialized in end-to-end supply chain management, helping businesses optimize operations, reduce costs, and drive efficiency.",
-    url: "https://e2esolutions.com",
+    url: "https://e2esolutions.com.au",
     siteName: "E2E Solutions",
-    locale: "en_US",
+    locale: "en_AU",
     type: "website",
   },
   twitter: {
