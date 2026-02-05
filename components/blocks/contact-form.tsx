@@ -192,7 +192,12 @@ export const ContactForm = ({ data }: ContactFormProps) => {
               </div>
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">Email us at</p>
-                <p className="font-semibold text-gray-900 dark:text-white">info@e2esolutions.com</p>
+                <a
+                  href="mailto:info@e2esolutions.com.au"
+                  className="font-semibold text-gray-900 dark:text-white hover:underline focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+                >
+                  info@e2esolutions.com.au
+                </a>
               </div>
             </div>
 
